@@ -1,144 +1,170 @@
 //components/ui/sidebar/app-sidebar.tsx
-'use client'
+"use client";
 import {
-   Sidebar,
-   SidebarContent,
-   SidebarGroup,
-   SidebarGroupContent,
-   SidebarGroupLabel,
-   SidebarMenu,
-   SidebarMenuButton,
-   SidebarMenuItem,
-   SidebarTrigger,
-} from "@/components/ui/sidebar"
-import Image from "next/image"
+  Sidebar,
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarTrigger,
+} from "@/components/ui/sidebar";
+import Image from "next/image";
 // import { VIVO_LOGO } from "@/lib/constants"
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../ui/collapsible"
-import sidebarItems from "./sidebarItems"
-import { useRouter } from "next/navigation"
-import { useEffect, useState } from "react"
-import { Button } from "../ui/button"
-
-
-
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "../ui/collapsible";
+import sidebarItems from "./sidebarItems";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { Button } from "../ui/button";
+import { ChevronDownIcon } from "lucide-react";
 
 export function AppSidebar() {
-   const [loading, setLoading] = useState(false);
-   const [loggedInUser, setLoggedInUser] = useState<any>(null);
-   const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [loggedInUser, setLoggedInUser] = useState<any>(null);
+  const router = useRouter();
 
-   useEffect(() => {
-      if (typeof document !== "undefined") {
-         const userCookie = document.cookie
-            .split("; ")
-            .find((row) => row.startsWith("vivoUser="));
+  useEffect(() => {
+    if (typeof document !== "undefined") {
+      const userCookie = document.cookie
+        .split("; ")
+        .find((row) => row.startsWith("vivoUser="));
 
-         if (userCookie) {
-            const userData = userCookie.split("=")[1];
-            setLoggedInUser(
-               userData ? JSON.parse(decodeURIComponent(userData)) : null
-            );
-         }
+      if (userCookie) {
+        const userData = userCookie.split("=")[1];
+        setLoggedInUser(
+          userData ? JSON.parse(decodeURIComponent(userData)) : null
+        );
       }
-   }, []);
+    }
+  }, []);
 
-   // useEffect(() => {
-   //    if (!loggedInUser) {
-   //       router.push("/login");
-   //    }
-   // }, [loggedInUser, router]);
+  // useEffect(() => {
+  //    if (!loggedInUser) {
+  //       router.push("/login");
+  //    }
+  // }, [loggedInUser, router]);
 
-   const handleLogout = () => {
-      if (typeof document !== "undefined") {
-         document.cookie = "vivoUser=; Max-Age=0; path=/";
-      }
-      setLoading(true);
-      setLoggedInUser(null);
-      setTimeout(() => {
-         router.push("/login");
-      }, 3000);
-   };
+  const handleLogout = () => {
+    if (typeof document !== "undefined") {
+      document.cookie = "vivoUser=; Max-Age=0; path=/";
+    }
+    setLoading(true);
+    setLoggedInUser(null);
+    setTimeout(() => {
+      router.push("/login");
+    }, 3000);
+  };
 
+  // const [loading, setLoading] = useState(false)
+  // const [loggedInUser, setLoggedInUser] = useState(() => {
+  //    const userCookie = document.cookie.split('; ').find(row => row.startsWith('vivoUser='));
+  //    if (userCookie) {
+  //       const userData = userCookie.split('=')[1];
+  //       return userData ? JSON.parse(decodeURIComponent(userData)) : null;
+  //    }
+  //    return null;
+  // });
+  // const router = useRouter();
+  // useEffect(() => {
+  //    if (!loggedInUser) {
+  //       router.push('/login');
+  //    }
+  // }, [loggedInUser, router]);
 
-   // const [loading, setLoading] = useState(false)
-   // const [loggedInUser, setLoggedInUser] = useState(() => {
-   //    const userCookie = document.cookie.split('; ').find(row => row.startsWith('vivoUser='));
-   //    if (userCookie) {
-   //       const userData = userCookie.split('=')[1];
-   //       return userData ? JSON.parse(decodeURIComponent(userData)) : null;
-   //    }
-   //    return null;
-   // });
-   // const router = useRouter();
-   // useEffect(() => {
-   //    if (!loggedInUser) {
-   //       router.push('/login');
-   //    }
-   // }, [loggedInUser, router]);
+  // const handleLogout = () => {
+  //    document.cookie = 'vivoUser=; Max-Age=0; path=/';
+  //    setLoading(true);
+  //    setLoggedInUser(null);
+  //    const router = useRouter();
+  //    setTimeout(() => {
+  //       router.push('/login');
+  //    }, 3000);
+  // };
 
+  const pathname = usePathname();
+  console.log("Current Pathname:", pathname);
 
-   // const handleLogout = () => {
-   //    document.cookie = 'vivoUser=; Max-Age=0; path=/';
-   //    setLoading(true);
-   //    setLoggedInUser(null);
-   //    const router = useRouter();
-   //    setTimeout(() => {
-   //       router.push('/login');
-   //    }, 3000);
-   // };
+  return (
+    <Sidebar className="thin-scrollbar" collapsible="icon">
+      <SidebarContent className=" thin-scrollbar">
+        <SidebarGroup>
+          {/* <SidebarGroupLabel> */}
+          <div className="flex items-center gap-x-4">
+            <Image
+              src={"/hr_logo.jpg"}
+              alt="HR logo"
+              width={60}
+              height={60}
+              className="rounded-full "
+            />
+            <div className="text-sm text-gray-950">
+              <h2 className="font-bold text-lg">HRM Portal</h2>
+              <p className="text-xs text-gray-600">
+                Welcome, {loggedInUser ? loggedInUser.name : "Guest"}
+              </p>
+            </div>
+          </div>
+          {/* </SidebarGroupLabel> */}
 
-
-  
-
-   return (
-      <Sidebar collapsible="icon">
-         <SidebarContent>
-            <SidebarGroup>
-               <SidebarGroupLabel>
-                  {/* <Image
-                     src={VIVO_LOGO}
-                     alt="VIVO Logo"
-                     width={200}
-                     height={200}
-                     className="rounded-full "
-                  /> */}
-               </SidebarGroupLabel>
-               <SidebarTrigger />
-               <div className="border-b border-gray-300 my-3"></div>
-               <SidebarGroupContent>
-                  {sidebarItems.map((item, index) => (
-                     <Collapsible key={index} defaultOpen={true}>
-                        <SidebarGroup >
-                           <div className="text-sm text-gray-950">
-                              <CollapsibleTrigger className="flex items-center justify-between gap-2 text-[16px] text-black/90">
-                                 <div className="flex gap-4 text-primary">
-                                    {item.icon}
-                                    {item.title}
-                                 </div>
-                              </CollapsibleTrigger>
-                           </div>
-                           <CollapsibleContent  >
-                              <SidebarMenu className="ml-4">
-                                 {item.children.map((child) => (
-                                    <SidebarMenuItem key={child.title}>
-                                       <SidebarMenuButton asChild>
-                                          <a href={child.url}>
-                                             <span>{child.title}</span>
-                                          </a>
-                                       </SidebarMenuButton>
-                                    </SidebarMenuItem>
-                                 ))}
-                              </SidebarMenu>
-                           </CollapsibleContent>
-                        </SidebarGroup>
-                     </Collapsible>
-                  ))}
-               </SidebarGroupContent>
-               <Button
-                  className="cursor-pointer mt-4"
-                  onClick={handleLogout} variant={"destructive"}>{loading ? 'Redirecting...' : 'Logout'}</Button>
-            </SidebarGroup>
-         </SidebarContent>
-      </Sidebar>
-   )
+          <div className="border-b border-gray-300 my-3"></div>
+          <SidebarGroupContent className="font-medium">
+            {sidebarItems.map((item, index) => (
+              <Collapsible key={index} defaultOpen={false}>
+                <SidebarGroup>
+                  <div className="text-sm">
+                    <CollapsibleTrigger className="flex items-center justify-between gap-2 text-[16px]">
+                      <SidebarMenuItem className="flex gap-4">
+                        <SidebarMenuButton
+                          asChild
+                          isActive={
+                            item?.url === pathname ||
+                            item.children?.some(
+                              (child) => child.url === pathname
+                            )
+                          }
+                        >
+                           <a href={item.url || "#"} className="text-text-color">
+                          <span className="flex items-center gap-2">
+                            {item.icon}
+                            {item.title}
+                          </span>
+                           </a>
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                      {/* <div className=" flex items-center justify-end">
+                                   <ChevronDownIcon className="h-4 w-4  transition-transform duration-200 ease-in-out data-[state=open]:rotate-180" />
+                               </div> */}
+                    </CollapsibleTrigger>
+                  </div>
+                  <CollapsibleContent>
+                    <SidebarMenu className="ml-4">
+                      {item.children?.map((child) => (
+                        <SidebarMenuItem key={child.title}>
+                          <SidebarMenuButton asChild>
+                            <a
+                              href={child.url}
+                              className="text-muted-foreground"
+                            >
+                              <span>{child.title}</span>
+                            </a>
+                          </SidebarMenuButton>
+                        </SidebarMenuItem>
+                      ))}
+                    </SidebarMenu>
+                  </CollapsibleContent>
+                </SidebarGroup>
+              </Collapsible>
+            ))}
+          </SidebarGroupContent>
+         
+        </SidebarGroup>
+      </SidebarContent>
+    </Sidebar>
+  );
 }

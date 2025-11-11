@@ -1,13 +1,14 @@
-import React from 'react'
-import { ThemeToggle } from '../theme/ThemeToggle'
+import React from "react";
+import { ThemeToggle } from "../theme/ThemeToggle";
+import { SidebarTrigger } from "../ui/sidebar";
 
 const Navbar = () => {
   return (
-    <div className='bg-white shadow-md p-4 flex justify-between items-center'>
-      Navbar
+    <div className="bg-transparent p-4 flex justify-between items-center">
+      <SidebarTrigger />
       <ThemeToggle />
     </div>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

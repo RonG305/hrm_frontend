@@ -1,126 +1,166 @@
 import React from "react";
 import { Icon } from "@iconify/react";
 
-const sidebarItems = [
-  {
-    title: "Sales",
-    icon: React.createElement(Icon, {
-      icon: "solar:chart-linear",
-      className: "w-6 h-6",
-    }),
-    children: [
-      {
-        title: "Record Sales",
-        url: "/dashboard/record-sales",
-      },
-      {
-        title: "Pending Sales",
-        url: "/dashboard/pending-sales",
-      },
-      {
-        title: "Approved Sales",
-        url: "/dashboard/approved-sales",
-      },
-      {
-        title: "Rejected ",
-        url: "/dashboard/rejected-sales",
-      },
-    ],
-  },
-  {
-    title: "Reports",
-    icon: React.createElement(Icon, {
-      icon: "solar:pie-chart-linear",
-      className: "w-6 h-6",
-    }),
 
-    children: [
-      {
-        title: "Performance",
-        url: "/dashboard/reports/performance",
-      },
-    ],
+const sidebarItems: SidebarItem[] = [
+  {
+    title: "Dashboard",
+    icon: React.createElement(Icon, {
+      icon: "solar:widget-4-bold",
+      className: "w-6 h-6",
+    }),
+    url: "/dashboard",
+    children: [],
+    allowedRoles: ["admin", "hr_manager", "supervisor", "employee"],
   },
   {
-    title: "Users",
+    title: "Projects",
     icon: React.createElement(Icon, {
-      icon: "solar:users-group-two-rounded-linear",
+      icon: "solar:settings-bold",
       className: "w-6 h-6",
     }),
     children: [
       {
-        title: "CSAs",
-        url: "/csas",
+        title: "All Projects",
+        url: "/dashboard/all-projects",
+        allowedRoles: ["admin", "hr_manager", "supervisor", "employee"],
       },
       {
-        title: "Mechanics",
-        url: "/mechanics",
+        title: "Pending Projects",
+        url: "/dashboard/pending-projects",
+        allowedRoles: ["admin", "hr_manager", "supervisor", "employee"],
       },
       {
-        title: "Oil Specialists",
-        url: "/oil-specialists",
+        title: "In Progress Projects",
+        url: "/dashboard/in-progress-projects",
+        allowedRoles: ["admin", "hr_manager", "supervisor", "employee"],
       },
       {
-        title: "Shop Attendants",
-        url: "/shop-attendants",
-      },
-      {
-        title: "Quality Marshalls",
-        url: "/quality-marshalls",
-      },
-      {
-        title: "Dealer",
-        url: "/dealers",
-      },
-      {
-        title: "Customer Champion",
-        url: "/customer-champions",
-      },
-      {
-        title: "Assistant Accountant",
-        url: "/assistant-accountants",
-      },
-      {
-        title: "Accountant",
-        url: "/accountants",
-      },
-      {
-        title: "Assistant Manager",
-        url: "/assistant-managers",
+        title: "Completed Projects",
+        url: "/dashboard/completed-projects",
+        allowedRoles: ["admin", "hr_manager", "supervisor", "employee"],
       },
     ],
+    allowedRoles: ["admin", "hr_manager", "supervisor", "employee"],
   },
-  {
-    title: "Set - Up",
-    icon: React.createElement(Icon, {
-      icon: "solar:settings-linear",
-      className: "w-6 h-6",
-    }),
-    children: [
-      {
-        title: "Targets",
-        url: "/targets",
-      },
-    ],
-  },
-  {
-    title: "User",
-    icon: React.createElement(Icon, {
-      icon: "solar:user-rounded-linear",
-      className: "w-6 h-6",
-    }),
 
+  {
+    title: "Employees",
+    icon: React.createElement(Icon, {
+      icon: "solar:users-group-rounded-bold",
+      className: "w-6 h-6",
+    }),
+    url: "/dashboard/employees",
+    children: [],
+    allowedRoles: ["admin", "hr_manager", "supervisor", "employee"],
+  },
+
+   {
+    title: "Tickets",
+    icon: React.createElement(Icon, {
+      icon: "solar:users-group-rounded-bold",
+      className: "w-6 h-6",
+    }),
     children: [
       {
-        title: "My Profile",
-        url: "/my-profile",
+        title: "All Employees",
+        url: "/dashboard/all-employees",
+        allowedRoles: ["admin", "hr_manager", "supervisor", "employee"],
       },
       {
-        title: "Change Password",
-        url: "/change-password",
+        title: "On Leave",
+        url: "/dashboard/on-leave-employees",
+        allowedRoles: ["admin", "hr_manager", "supervisor", "employee"],
+      },
+    ],
+    allowedRoles: ["admin", "hr_manager", "supervisor", "employee"],
+  },
+
+   {
+    title: "Tasks",
+    icon: React.createElement(Icon, {
+      icon: "solar:users-group-rounded-bold",
+      className: "w-6 h-6",
+    }),
+    children: [
+      {
+        title: "All Employees",
+        url: "/dashboard/all-employees",
+        allowedRoles: ["admin", "hr_manager", "supervisor", "employee"],
+      },
+      {
+        title: "On Leave",
+        url: "/dashboard/on-leave-employees",
+        allowedRoles: ["admin", "hr_manager", "supervisor", "employee"],
+      },
+    ],
+    allowedRoles: ["admin", "hr_manager", "supervisor", "employee"],
+  },
+
+   {
+    title: "Holidays",
+    icon: React.createElement(Icon, {
+      icon: "solar:users-group-rounded-bold",
+      className: "w-6 h-6",
+    }),
+    allowedRoles: ["admin", "hr_manager", "supervisor", "employee"],
+    children: [
+      {
+        title: "All Employees",
+        url: "/dashboard/all-employees",
+        allowedRoles: ["admin", "hr_manager", "supervisor", "employee"],
+      },
+      {
+        title: "On Leave",
+        url: "/dashboard/on-leave-employees",
+        allowedRoles: ["admin", "hr_manager", "supervisor", "employee"],
       },
     ],
   },
+
+   {
+    title: "Attendance",
+    icon: React.createElement(Icon, {
+      icon: "solar:users-group-rounded-bold",
+      className: "w-6 h-6",
+    }),
+    children: [
+      {
+        title: "All Employees",
+        url: "/dashboard/all-employees",
+        allowedRoles: ["admin", "hr_manager", "supervisor", "employee"],
+      },
+
+      {
+        title: "On Leave",
+        url: "/dashboard/on-leave-employees",
+        allowedRoles: ["admin", "hr_manager", "supervisor", "employee"],
+      },
+    ],
+    allowedRoles: ["admin", "hr_manager", "supervisor", "employee"],
+  },
+
+   {
+    title: "Performance",
+    icon: React.createElement(Icon, {
+      icon: "solar:users-group-rounded-bold",
+      className: "w-6 h-6",
+    }),
+    children: [
+      {
+        title: "All Employees",
+        url: "/dashboard/all-employees",
+        allowedRoles: ["admin", "hr_manager", "supervisor", "employee"],
+      },
+      {
+        title: "On Leave",
+        url: "/dashboard/on-leave-employees",
+        allowedRoles: ["admin", "hr_manager", "supervisor", "employee"],
+      },
+    ],
+    allowedRoles: ["admin", "hr_manager", "supervisor", "employee"],
+  },
+
 ] as const;
 
 
