@@ -61,18 +61,8 @@ const sidebarItems: SidebarItem[] = [
       icon: "solar:users-group-rounded-bold",
       className: "w-6 h-6",
     }),
-    children: [
-      {
-        title: "All Employees",
-        url: "/dashboard/all-employees",
-        allowedRoles: ["admin", "hr_manager", "supervisor", "employee"],
-      },
-      {
-        title: "On Leave",
-        url: "/dashboard/on-leave-employees",
-        allowedRoles: ["admin", "hr_manager", "supervisor", "employee"],
-      },
-    ],
+    children: [],
+    url: "/dashboard/tickets",
     allowedRoles: ["admin", "hr_manager", "supervisor", "employee"],
   },
 

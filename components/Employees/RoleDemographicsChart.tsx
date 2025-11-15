@@ -12,7 +12,7 @@ export default function RoleDemographicsChart() {
 
   return (
     <Card>
-      <h2 className="text-2xl font-medium mb-4">Role Demographics</h2>
+      <h2 className="text-xl font-medium mb-4">Role Demographics</h2>
       <HalfDonutChart data={data.map(item => ({ role: item.name, value: item.value }))} height={450} title="Role Demographics (%)" />
     </Card>
   );

@@ -14,7 +14,7 @@ const badgeVariants = cva(
         secondary:
           "border-transparent bg-secondary text-secondary-foreground [a&]:hover:bg-secondary/90",
         success:
-          "border-transparent bg-success/40 text-success [a&]:hover:bg-success/90",
+          "border-transparent bg-success/30 text-success [a&]:hover:bg-success/90",
         accent:
           "border-transparent bg-accent text-accent-foreground [a&]:hover:bg-accent/90",
         warning:

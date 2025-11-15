@@ -40,6 +40,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { ChevronDown, Loader2 } from "lucide-react";
 import { Card } from "../ui/card";
+import { Checkbox } from "../ui/checkbox";
 
 type DataTableProps<TData> = {
   data: TData[];
@@ -179,7 +180,13 @@ export function DataTable<TData>({
                     }) => (
                       <TableRow key={headerGroup.id} className="bg-muted">
                         <TableHead className="w-[60px] text-center">
-                          #
+                          <Checkbox
+                            checked={table.getIsAllRowsSelected()}
+                            onCheckedChange={(value) =>
+                              table.toggleAllRowsSelected(!!value)
+                            }
+                            aria-label="Select all rows"
+                          />
                         </TableHead>
                         {headerGroup.headers.map((header) => (
                           <TableHead key={header.id}>
@@ -204,10 +211,10 @@ export function DataTable<TData>({
                       data-state={row.getIsSelected() && "selected"}
                     >
                       <TableCell className="text-center font-medium">
-                        {row.id}
+                        <Checkbox checked={row.getIsSelected()} onCheckedChange={(value) => row.toggleSelected(!!value)} />
                       </TableCell>
                       {row.getVisibleCells().map((cell: any) => (
-                        <TableCell key={cell.id} className="text-base py-2">
+                        <TableCell key={cell.id} className="tex py-2">
                           {flexRender(
                             cell.column.columnDef.cell,
                             cell.getContext()

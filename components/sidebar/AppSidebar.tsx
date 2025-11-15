@@ -1,4 +1,3 @@
-//components/ui/sidebar/app-sidebar.tsx
 "use client";
 import {
   Sidebar,
@@ -12,7 +11,6 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import Image from "next/image";
-// import { VIVO_LOGO } from "@/lib/constants"
 import {
   Collapsible,
   CollapsibleContent,
@@ -88,7 +86,6 @@ export function AppSidebar() {
   // };
 
   const pathname = usePathname();
-  console.log("Current Pathname:", pathname);
 
   return (
     <Sidebar className="thin-scrollbar" collapsible="icon">
@@ -115,7 +112,7 @@ export function AppSidebar() {
           <div className="border-b border-gray-300 my-3"></div>
           <SidebarGroupContent className="font-medium">
             {sidebarItems.map((item, index) => (
-              <Collapsible key={index} defaultOpen={false}>
+              <Collapsible key={index} defaultOpen={true}>
                 <SidebarGroup>
                   <div className="text-sm">
                     <CollapsibleTrigger className="flex items-center justify-between gap-2 text-[16px]">

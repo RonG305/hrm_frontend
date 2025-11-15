@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Poppins } from "next/font/google";
+import { Geist, Geist_Mono, Inter, Poppins } from "next/font/google";
 import "./globals.css";
 import QueryProvider from "@/providers/QueryProvider";
+import { Toaster } from "sonner";
 
 const poppins = Poppins({subsets: ["latin"], weight: ["400", "500", "700"]});
+const inter = Inter({subsets: ["latin"], variable: "--font-inter"});
 
 export const metadata: Metadata = {
   title: "HRM Portal",
@@ -51,9 +53,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${poppins.className} antialiased`}
+        className={`${inter.className} antialiased`}
       >
         <QueryProvider>
+               <Toaster richColors position="top-right" closeButton />
           {children}
         </QueryProvider>
       </body>

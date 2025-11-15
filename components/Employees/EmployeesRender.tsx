@@ -1,32 +1,48 @@
-import React from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
-import EmployeesList from "./EmployeesList";
+"use client";
 
-const EmployeesRender = () => {
+import { useRouter, useSearchParams } from "next/navigation";
+import EmployeesList from "./EmployeesList";
+import { Button } from "../ui/button";
+
+const types = [
+  { label: "All", value: "" },
+  { label: "Full Time", value: "Full-Time" },
+  { label: "Part Time", value: "Part-Time" },
+  { label: "Contract", value: "Contract" },
+];
+
+export default function EmployeesRender({
+  initialData,
+  currentType,
+}: {
+  initialData: any;
+  currentType: string;
+}) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const handleChange = (val: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("employment_type", val);
+
+    router.push(`/dashboard/employees?${params.toString()}`);
+  };
+
   return (
-    <div className="w-full md:w-auto thin-scrollbar mt-4">
-      <Tabs defaultValue="all_employees" className="w-full">
-        <TabsList>
-          <TabsTrigger value="all_employees">All Employees</TabsTrigger>
-          <TabsTrigger value="full_time">Full Time</TabsTrigger>
-          <TabsTrigger value="part_time">Part Time</TabsTrigger>
-          <TabsTrigger value="contract">Contract</TabsTrigger>
-        </TabsList>
-        <TabsContent value="all_employees">
-          <EmployeesList />
-        </TabsContent>
-        <TabsContent value="full_time">
-          List full time employees here.
-        </TabsContent>
-        <TabsContent value="part_time">
-          List part time employees here.
-        </TabsContent>
-        <TabsContent value="contract">
-          List contract employees here.
-        </TabsContent>
-      </Tabs>
+    <div className="w-full mt-4 space-y-4">
+      <div className="flex gap-3 overflow-x-auto thin-scrollbar">
+        {types.map((t) => (
+          <Button
+            key={t.value}
+            variant={currentType === t.value ? "default" : "outline"}
+            onClick={() => handleChange(t.value)}
+            className={`px-4 py-2  border rounded-full `}
+          >
+            {t.label}
+          </Button>
+        ))}
+      </div>
+      <EmployeesList initialData={initialData} currentType={currentType} />
     </div>
   );
-};
-
-export default EmployeesRender;
+}
