@@ -88,12 +88,10 @@ export function AddEmployee() {
     fetchRoles();
   }, []);
 
-  console.log("ERRORS:", errors);
   const queryClient = useQueryClient();
 
   const { mutate, isPending } = useMutation({
     mutationFn: async (data: formFields) => {
-      console.log("FORM DATA:", data);
       return createEmployee(data);
     },
     onSuccess: (data) => {

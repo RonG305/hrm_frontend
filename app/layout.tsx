@@ -5,7 +5,7 @@ import QueryProvider from "@/providers/QueryProvider";
 import { Toaster } from "sonner";
 
 const poppins = Poppins({subsets: ["latin"], weight: ["400", "500", "700"]});
-const inter = Inter({subsets: ["latin"], variable: "--font-inter"});
+const inter = Inter({subsets: ["latin", "greek"], variable: "--font-inter"});
 
 export const metadata: Metadata = {
   title: "HRM Portal",

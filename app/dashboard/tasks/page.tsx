@@ -3,7 +3,7 @@ import TaksList from '@/components/Tasks/TaksList'
 const page = () => {
   return (
     <div>
-      <TaksList />
+  Tasks list
     </div>
   )
 }

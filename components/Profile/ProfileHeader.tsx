@@ -49,7 +49,7 @@ const ProfileHeader = ({profile}: {profile: Employee}) => {
 
         <div>
              <div className="flex items-center gap-x-2">
-            <p>Account Status</p>
+            <p className="text-sm">Account Status</p>
             <Badge variant={`${profile?.is_active ? "success" : "destructive"}`}>{profile?.is_active ? "Active" : "Inactive"}</Badge>
           </div>
 

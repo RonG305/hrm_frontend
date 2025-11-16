@@ -118,7 +118,7 @@ export function DataTable<TData>({
    <div className="flex flex-col items-center md:flex-row justify-between" >
      <div>
         <h2 className="text-2xl font-semibold text-primary mt-4 ">{title}</h2>
-      <p className="text-sm text-secondary mb-2">{description}</p>
+      <p className="text-sm text-muted-foreground mb-2">{description}</p>
     </div>
      {addExportOperationsComponent}
    </div>

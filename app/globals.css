@@ -5,6 +5,8 @@
 
 @theme inline {
   --color-background: var(--background);
+  --color-warning: var(--warning);
+  --color-info: var(--info);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
@@ -52,6 +54,8 @@
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
+  --warning: #ecd611;
+  --info: #639cf7;
   --popover-foreground: oklch(0.145 0 0);
   --primary: #007787;
   --primary-foreground: oklch(0.985 0 0);

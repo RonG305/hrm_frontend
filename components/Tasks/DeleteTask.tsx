@@ -13,60 +13,63 @@ import {
 import { useState } from "react";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import {  deleteEmployee, updateEmployee } from "./actions";
+
 import { Spinner } from "../ui/spinner";
 import { showToast } from "../common/ShowToast";
-import {Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
+import { deleteTask } from "./actions";
 
-export function DeleteEmployee({employee_id}: {employee_id: string}) {
-   const [open, setOpen] = useState<boolean>(false);
+export function DeleteTask({ task_id }: { task_id: string }) {
+  const [open, setOpen] = useState<boolean>(false);
   const queryClient = useQueryClient();
 
   const { mutate, isPending } = useMutation({
     mutationFn: async () => {
-      return deleteEmployee(employee_id);
+      return deleteTask(task_id);
     },
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ["employees"] });
+      queryClient.invalidateQueries({ queryKey: ["user-tasks"] });
       showToast({
-        title: "Employee Deleted",
+        title: "Task Deleted",
         type: "success",
-        message: "The employee has been deleted successfully.",
+        message: data?.message || "The task has been deleted successfully.",
       });
       setOpen(false);
     },
 
     onError: (error: any) => {
-       showToast({
-        title: "Error Deleting Employee",
+      showToast({
+        title: "Error Deleting Task",
         type: "error",
-        message: error?.message || "An error occurred while deleting the employee.",
+        message: error?.message || "An error occurred while deleting the task.",
       });
     },
   });
 
- const handleDelete = () => {
+  const handleDelete = () => {
     mutate();
- }
+  };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-       <span className="flex text-destructive gap-x-2"><Trash2 size={18} className="mr-2" />Delete</span>
+        <span className="flex text-destructive gap-x-2">
+          <Trash2 size={18} className="mr-2" />
+          Delete
+        </span>
       </DialogTrigger>
 
       <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto no-scrollbar">
         <DialogHeader>
-          <DialogTitle>Update Employee</DialogTitle>
-          <DialogDescription>
-            Fill the form below to update the employee's information.
-          </DialogDescription>
+          <DialogTitle>Delete Task</DialogTitle>
+          <DialogDescription>Delete Task</DialogDescription>
         </DialogHeader>
-<div className="mt-4">
-        <div className="mb-4">
-          <strong className="text-destructive">Warning!</strong> Are you sure you want to delete this employee? This action cannot be undone.
-        </div>
-     
+        <div className="mt-4">
+          <div className="mb-4">
+            <strong className="text-destructive">Warning!</strong> Are you sure
+            you want to delete this task? This action cannot be undone.
+          </div>
+
           <DialogFooter>
             <DialogClose asChild>
               <Button type="button" variant="outline">
@@ -74,8 +77,12 @@ export function DeleteEmployee({employee_id}: {employee_id: string}) {
               </Button>
             </DialogClose>
 
-            <Button onClick={handleDelete} variant={"destructive"} type="submit">
-              {isPending ? <Spinner /> : "Delete Employee"}
+            <Button
+              onClick={handleDelete}
+              variant={"destructive"}
+              type="submit"
+            >
+              {isPending ? <Spinner /> : "Delete Task"}
             </Button>
           </DialogFooter>
         </div>
