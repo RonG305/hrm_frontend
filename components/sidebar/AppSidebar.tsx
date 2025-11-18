@@ -19,8 +19,6 @@ import {
 import sidebarItems from "./sidebarItems";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Button } from "../ui/button";
-import { ChevronDownIcon } from "lucide-react";
 
 export function AppSidebar() {
   const [loading, setLoading] = useState(false);
@@ -102,7 +100,7 @@ export function AppSidebar() {
             />
             <div className="text-sm text-gray-950">
               <h2 className="font-bold text-lg">HRM Portal</h2>
-              <p className="text-xs text-gray-600">
+              <p className="text-xs">
                 Welcome, {loggedInUser ? loggedInUser.name : "Guest"}
               </p>
             </div>
@@ -126,7 +124,7 @@ export function AppSidebar() {
                             )
                           }
                         >
-                           <a href={item.url || "#"} className="text-text-color">
+                           <a href={item.url || "#"} className="text-primary uppercase font-semibold">
                           <span className="flex items-center gap-2">
                             {item.icon}
                             {item.title}
@@ -143,12 +141,18 @@ export function AppSidebar() {
                     <SidebarMenu className="ml-4">
                       {item.children?.map((child) => (
                         <SidebarMenuItem key={child.title}>
-                          <SidebarMenuButton asChild>
+                          <SidebarMenuButton 
+                           isActive={child.url === pathname}
+                           variant={`${child.url === pathname ? 'primary': 'default'}`}
+                          asChild>
                             <a
                               href={child.url}
-                              className="text-muted-foreground"
+                              className=""
                             >
-                              <span>{child.title}</span>
+                             <span className="flex items-center gap-2">
+                            {child.icon}
+                            {child.title}
+                          </span>
                             </a>
                           </SidebarMenuButton>
                         </SidebarMenuItem>

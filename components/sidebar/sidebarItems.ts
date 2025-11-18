@@ -1,7 +1,6 @@
 import React from "react";
 import { Icon } from "@iconify/react";
 
-
 const sidebarItems: SidebarItem[] = [
   {
     title: "Dashboard",
@@ -14,145 +13,370 @@ const sidebarItems: SidebarItem[] = [
     allowedRoles: ["admin", "hr_manager", "supervisor", "employee"],
   },
   {
-    title: "Projects",
+    title: "Projects Management",
     icon: React.createElement(Icon, {
-      icon: "solar:settings-bold",
+      icon: "",
       className: "w-6 h-6",
     }),
     children: [
       {
-        title: "All Projects",
-        url: "/dashboard/all-projects",
+        title: "Projects",
+        url: "/dashboard/projects",
         allowedRoles: ["admin", "hr_manager", "supervisor", "employee"],
+        icon: React.createElement(Icon, {
+          icon: "solar:settings-linear",
+          className: "w-6 h-6",
+        }),
       },
       {
-        title: "Pending Projects",
-        url: "/dashboard/pending-projects",
+        title: "Tasks",
+        url: "/dashboard/tasks",
         allowedRoles: ["admin", "hr_manager", "supervisor", "employee"],
+      icon: React.createElement(Icon, {
+          icon: "solar:clipboard-list-linear",
+          className: "w-6 h-6",
+        }),
       },
       {
-        title: "In Progress Projects",
-        url: "/dashboard/in-progress-projects",
+        title: "Members",
+        url: "/dashboard/project-members",
         allowedRoles: ["admin", "hr_manager", "supervisor", "employee"],
-      },
-      {
-        title: "Completed Projects",
-        url: "/dashboard/completed-projects",
-        allowedRoles: ["admin", "hr_manager", "supervisor", "employee"],
-      },
+        icon: React.createElement(Icon, {
+          icon: "solar:users-group-rounded-linear",
+          className: "w-6 h-6",
+        }),
+      }
     ],
     allowedRoles: ["admin", "hr_manager", "supervisor", "employee"],
+  },
+
+
+  {
+    title: "Work Management",
+    icon: React.createElement(Icon, {
+      icon: "",
+      className: "w-6 h-6",
+    }),
+    children: [
+      {
+        title: "Task Assignments",
+        url: "/dashboard/task-assignments",
+        allowedRoles: ["admin"],
+        icon: React.createElement(Icon, {
+          icon: "solar:clipboard-list-linear",
+          className: "w-6 h-6",
+        }),
+      },
+
+      {
+        title: "Shift Scheduling",
+        url: "/dashboard/shift-scheduling",
+        icon: React.createElement(Icon, {
+      icon: "solar:calendar-mark-outline",
+          className: "w-6 h-6",
+        }),
+        allowedRoles: ["admin",],
+      },
+      {
+        title: "Performance Analytics",
+        url: "/dashboard/performance-analytics",
+        icon: React.createElement(Icon, {
+          icon: "solar:chart-bold-duotone",
+          className: "w-6 h-6",
+        }),
+        allowedRoles: ["admin",],
+      },
+
+        {
+        title: "Reports ",
+        url: "/dashboard/work-reports",
+        icon: React.createElement(Icon, {
+          icon: "solar:book-outline",
+          className: "w-6 h-6",
+        }),
+        allowedRoles: ["admin",],
+      },
+    ],
+    allowedRoles: ["admin", "hr_manager"],
+  },
+
+   {
+    title: "Time & Attendance",
+    icon: React.createElement(Icon, {
+      icon: "",
+      className: "w-6 h-6",
+    }),
+    children: [
+      {
+        title: "Time Tracking",
+        url: "/dashboard/time-tracking",
+        allowedRoles: ["admin"],
+        icon: React.createElement(Icon, {
+          icon: "solar:alarm-linear",
+          className: "w-6 h-6",
+        }),
+      },
+
+      {
+        title: "Geofence Attendance",
+        url: "/dashboard/geofence-attendance",
+        icon: React.createElement(Icon, {
+          icon: "solar:earth-linear",
+          className: "w-6 h-6",
+        }),
+        allowedRoles: ["admin",],
+      },
+
+        {
+        title: "Attendance Reports ",
+        url: "/dashboard/attendance-reports",
+        icon: React.createElement(Icon, {
+          icon: "solar:book-outline",
+          className: "w-6 h-6",
+        }),
+        allowedRoles: ["admin",],
+      },
+
+      {
+        title: "Leave Management",
+        url: "/dashboard/leave-management",
+        icon: React.createElement(Icon, {
+          icon: "solar:calendar-minimalistic-broken",
+          className: "w-6 h-6",
+        }),
+        allowedRoles: ["admin",],
+      },
+    ],
+    allowedRoles: ["admin", "hr_manager"],
+  },
+
+    {
+    title: "Organization & Employees",
+    icon: React.createElement(Icon, {
+      icon: "",
+      className: "w-6 h-6",
+    }),
+
+    allowedRoles: ["admin", "hr_manager", "supervisor"],
+    children: [
+      {
+        title: "Departments",
+        url: "/dashboard/departments",
+        allowedRoles: ["admin", "hr_manager"],
+        icon: React.createElement(Icon, {
+          icon: "solar:buildings-linear",
+          className: "w-6 h-6",
+        }),
+      },
+
+      {
+        title: "Branches",
+        url: "/dashboard/branches",
+        allowedRoles: ["admin"],
+        icon: React.createElement(Icon, {
+          icon: "tabler:binary-tree-2",
+          className: "w-6 h-6",
+        }),
+      },
+
+      {
+        title: "Units",
+        url: "/dashboard/units",
+        allowedRoles: ["admin" ],
+        icon: React.createElement(Icon, {
+          icon: "solar:home-angle-2-linear",
+          className: "w-6 h-6",
+        }),
+      },
+
+      {
+        title: "Employees",
+        url: "/dashboard/employees",
+        allowedRoles: ["admin", "hr_manager"],
+        icon: React.createElement(Icon, {
+          icon: "solar:users-group-rounded-linear",
+          className: "w-6 h-6",
+        }),
+      },
+
+    ],
   },
 
   {
-    title: "Employees",
+    title: "Recruitment & Onboarding",
     icon: React.createElement(Icon, {
-      icon: "solar:users-group-rounded-bold",
-      className: "w-6 h-6",
-    }),
-    url: "/dashboard/employees",
-    children: [],
-    allowedRoles: ["admin", "hr_manager", "supervisor", "employee"],
-  },
-
-   {
-    title: "Tickets",
-    icon: React.createElement(Icon, {
-      icon: "solar:users-group-rounded-bold",
-      className: "w-6 h-6",
-    }),
-    children: [],
-    url: "/dashboard/tickets",
-    allowedRoles: ["admin", "hr_manager", "supervisor", "employee"],
-  },
-
-   {
-    title: "Tasks",
-    icon: React.createElement(Icon, {
-      icon: "solar:users-group-rounded-bold",
+      icon: "",
       className: "w-6 h-6",
     }),
     children: [
       {
-        title: "All Employees",
-        url: "/dashboard/all-employees",
-        allowedRoles: ["admin", "hr_manager", "supervisor", "employee"],
+        title: "Job Requisitions",
+        url: "/dashboard/job-requisitions",
+        allowedRoles: ["admin", "hr_manager"],
+        icon: React.createElement(Icon, {
+          icon: "solar:plaaylist-minimalistic-broken",
+          className: "w-6 h-6",
+        }),
       },
       {
-        title: "On Leave",
-        url: "/dashboard/on-leave-employees",
-        allowedRoles: ["admin", "hr_manager", "supervisor", "employee"],
+        title: "Job Postings",
+        url: "/dashboard/job-postings",
+        allowedRoles: ["admin", "hr_manager"],
+        icon: React.createElement(Icon, {
+          icon: "solar:map-arrow-square-line-duotone",
+          className: "w-6 h-6",
+        }),
+      },
+      {
+        title: "Evaluation Criteria",
+        url: "/dashboard/evaluation-criteria",
+        allowedRoles: ["admin", "hr_manager"],
+        icon: React.createElement(Icon, {
+          icon: "solar:clipboard-check-linear",
+          className: "w-6 h-6",
+        }),
+      },
+      {
+        title: "Applications",
+        url: "/dashboard/applications",
+        allowedRoles: ["admin", "hr_manager"],
+        icon: React.createElement(Icon, {
+          icon: "solar:checklist-minimalistic-outline",
+          className: "w-6 h-6",
+        }),
+      },
+
+      {
+        title: "Interview evaluations",
+        url: "/dashboard/interview-evaluations",
+        allowedRoles: ["admin", "hr_manager"],
+        icon: React.createElement(Icon, {
+          icon: "solar:user-speak-rounded-linear",
+          className: "w-6 h-6",
+        }),
+      },
+
+      {
+        title: "Onboarding tasks",
+        url: "/dashboard/onboarding-tasks",
+        allowedRoles: ["admin", "hr_manager"],
+        icon: React.createElement(Icon, {
+          icon: "solar:list-up-minimalistic-broken",
+          className: "w-6 h-6",
+        }),
+      },
+
+      {
+        title: "Probation Records",
+        url: "/dashboard/probation-records",
+        allowedRoles: ["admin", "hr_manager"],
+        icon: React.createElement(Icon, {
+          icon: "solar:notebook-broken",
+          className: "w-6 h-6",
+        }),
       },
     ],
     allowedRoles: ["admin", "hr_manager", "supervisor", "employee"],
   },
 
    {
-    title: "Holidays",
+    title: "Assets & Inventory",
     icon: React.createElement(Icon, {
-      icon: "solar:users-group-rounded-bold",
+      icon: "",
       className: "w-6 h-6",
     }),
-    allowedRoles: ["admin", "hr_manager", "supervisor", "employee"],
     children: [
       {
-        title: "All Employees",
-        url: "/dashboard/all-employees",
-        allowedRoles: ["admin", "hr_manager", "supervisor", "employee"],
+        title: "All assets",
+        url: "/dashboard/assets",
+        allowedRoles: ["admin"],
+        icon: React.createElement(Icon, {
+          icon: "solar:laptop-linear",
+          className: "w-6 h-6",
+        }),
       },
       {
-        title: "On Leave",
-        url: "/dashboard/on-leave-employees",
-        allowedRoles: ["admin", "hr_manager", "supervisor", "employee"],
+        title: "Asset Requests and Approvals",
+        url: "/dashboard/asset-assignments",
+        icon: React.createElement(Icon, {
+          icon: "solar:map-arrow-square-linear",
+          className: "w-6 h-6",
+        }),
+        allowedRoles: ["admin",],
+      },
+      {
+        title: "Asset categories",
+        url: "/dashboard/asset-categories",
+        icon: React.createElement(Icon, {
+          icon: "solar:layers-linear",
+          className: "w-6 h-6",
+        }),
+        allowedRoles: ["admin",],
       },
     ],
+    allowedRoles: ["admin"],
   },
 
-   {
-    title: "Attendance",
+    {
+    title: "Users  & Roles",
     icon: React.createElement(Icon, {
-      icon: "solar:users-group-rounded-bold",
+      icon: "",
       className: "w-6 h-6",
     }),
     children: [
       {
-        title: "All Employees",
-        url: "/dashboard/all-employees",
-        allowedRoles: ["admin", "hr_manager", "supervisor", "employee"],
+        title: "All users",
+        url: "/dashboard/users",
+        allowedRoles: ["admin"],
+        icon: React.createElement(Icon, {
+          icon: "solar:users-group-rounded-linear",
+          className: "w-6 h-6",
+        }),
       },
-
       {
-        title: "On Leave",
-        url: "/dashboard/on-leave-employees",
-        allowedRoles: ["admin", "hr_manager", "supervisor", "employee"],
+        title: "Roles & Permissions",
+        url: "/dashboard/roles-permissions",
+        icon: React.createElement(Icon, {
+          icon: "solar:lock-keyhole-linear",
+          className: "w-6 h-6",
+        }),
+        allowedRoles: ["admin",],
       },
     ],
-    allowedRoles: ["admin", "hr_manager", "supervisor", "employee"],
+    allowedRoles: ["admin"],
   },
 
-   {
-    title: "Performance",
+ {
+    title: "Help & Support",
     icon: React.createElement(Icon, {
-      icon: "solar:users-group-rounded-bold",
+      icon: "",
       className: "w-6 h-6",
     }),
     children: [
+
       {
-        title: "All Employees",
-        url: "/dashboard/all-employees",
-        allowedRoles: ["admin", "hr_manager", "supervisor", "employee"],
+        title: "Issues & Tickets",
+        url: "/dashboard/issues-tickets",
+        icon: React.createElement(Icon, {
+          icon: "solar:ticket-sale-linear",
+          className: "w-6 h-6",
+        }),
+        allowedRoles: ["admin",],
       },
       {
-        title: "On Leave",
-        url: "/dashboard/on-leave-employees",
-        allowedRoles: ["admin", "hr_manager", "supervisor", "employee"],
+        title: "Help-desk categories",
+        url: "/dashboard/help-desk-categories",
+        icon: React.createElement(Icon, {
+          icon: "solar:help-linear",
+          className: "w-6 h-6",
+        }),
+        allowedRoles: ["admin",],
       },
     ],
-    allowedRoles: ["admin", "hr_manager", "supervisor", "employee"],
+    allowedRoles: ["admin"],
   },
 
 ] as const;
-
 
 export type SidebarItem = {
   title: string;

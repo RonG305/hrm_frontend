@@ -32,7 +32,7 @@ export function DeleteTask({ task_id }: { task_id: string }) {
       showToast({
         title: "Task Deleted",
         type: "success",
-        message: data?.message || "The task has been deleted successfully.",
+        message: (data && 'message' in data ? data.message : null) || "The task has been deleted successfully.",
       });
       setOpen(false);
     },

@@ -73,9 +73,9 @@ const columns: ColumnDef<Task>[] = [
   },
 ];
 
-const UserTaksList = ({ initialData }: { initialData: Task[] }) => {
+const AllTasks = ({ initialData }: { initialData: Task[] }) => {
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["user-tasks"],
+    queryKey: ["tasks"],
     queryFn: async () => getUserTasks(),
     initialData: initialData,
   });
@@ -98,7 +98,7 @@ const UserTaksList = ({ initialData }: { initialData: Task[] }) => {
           searchableColumns={["title", "assigned_by"]}
           title="All your tasks"
           addExportOperationsComponent={<AddAndExportTasks />}
-          description="List of all your tasks , both assigned to you and the one you assigned to your fellows"
+          description="List of tasks "
           data={data?.results || []}
         />
       )}
@@ -106,4 +106,4 @@ const UserTaksList = ({ initialData }: { initialData: Task[] }) => {
   );
 };
 
-export default UserTaksList;
+export default AllTasks;
