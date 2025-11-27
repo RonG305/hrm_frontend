@@ -22,7 +22,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { getDepartments } from "../Depatments/actions";
 import { useEffect, useState } from "react";
 import { getOrganizationalRoles } from "../Oragnization/actions";
 import { getRoles } from "../Roles/actions";
@@ -33,6 +32,7 @@ import {  updateEmployee } from "./actions";
 import { Spinner } from "../ui/spinner";
 import { showToast } from "../common/ShowToast";
 import { Edit2Icon, SquarePenIcon } from "lucide-react";
+import { getDepartments } from "../Departments/actions";
 
 const employeeSchema = z.object({
   first_name: z.string().min(1, "First name is required"),

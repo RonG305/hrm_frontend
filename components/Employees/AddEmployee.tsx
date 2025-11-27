@@ -22,7 +22,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { getDepartments } from "../Depatments/actions";
+import { getDepartments } from "../Departments/actions";
 import { useEffect, useState } from "react";
 import { getOrganizationalRoles } from "../Oragnization/actions";
 import { getRoles } from "../Roles/actions";
