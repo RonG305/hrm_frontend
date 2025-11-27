@@ -14,6 +14,7 @@ import { DeleteTask } from "./DeleteTask";
 import { UpdateTask } from "./UpdateTask";
 import Link from "next/link";
 import { EyeIcon } from "lucide-react";
+import ViewTask from "./ViewTask";
 
 const columns: ColumnDef<Task>[] = [
   {
@@ -63,10 +64,7 @@ const columns: ColumnDef<Task>[] = [
     cell: ({ row }) => {
       return <ActionDropdown>
         <UpdateTask task={row.original} />
-        <Link className="text-primary flex items-center gap-x-2" href={`/dashboard/tasks/${row.original.id}`}>
-          <EyeIcon />
-            <p>View</p>
-          </Link>
+        <ViewTask taskDetails={row.original} />
         <DeleteTask task_id={row.original.id} />
       </ActionDropdown>;
     },

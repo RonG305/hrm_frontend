@@ -1,16 +1,14 @@
 "use client";
 
-import React from "react";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Button } from "../ui/button";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { Mail, Lock } from "lucide-react";
 import Link from "next/link";
 import { Icon } from "@iconify/react";
 import { useForm } from "react-hook-form";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginUser } from "./actions";
@@ -40,6 +38,20 @@ const Login = () => {
   const { mutate, isPending } = useMutation({
     mutationFn: async (data: formFields) => loginUser(data),
     onSuccess: (data) => {
+        if(data?.error) {
+            showToast({
+                title: "Login Failed",
+                message: data.error || "Invalid email or password.",
+                type: "error",
+            });
+            setError("root", {
+                type: "server",
+                message: data.error || "Login failed",
+            })
+            return;
+        }
+
+        localStorage.setItem("token", data?.access_token || "");
       showToast({
         title: "Login Successful",
         message: data?.message || "You have successfully logged in.",
@@ -49,6 +61,10 @@ const Login = () => {
     },
 
     onError: (error: any) => {
+        setError("root", {
+        type: "server",
+        message: error?.message || "Login failed",
+        })
       showToast({
         title: "Login Failed",
         message: error?.message || "Invalid email or password.",

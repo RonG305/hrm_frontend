@@ -33,125 +33,136 @@ import { Spinner } from "../ui/spinner";
 import { Task } from "./types";
 import { SquarePenIcon } from "lucide-react";
 import { updateData } from "@/lib/api";
-
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../ui/dialog";
 
 const taskSchema = z.object({
-    title: z.string().min(1, "Title is required"),
-    description: z.string().min(1, "Description is required"),
-    due_date: z.string().min(1, "Due date is required"),
-    // files: z.array(z.string()).optional(),
-    priority: z.enum(["Low", "Medium", "High"], {
-        message: "Priority is required"
-    }),
-    status: z.enum(["Pending", "In Progress", "Completed"], {
-        message: "Status is required"
-    }),
-    assigned_to: z.string().min(1, "Assigned to is required"),
-})
+  title: z.string().min(1, "Title is required"),
+  description: z.string().min(1, "Description is required"),
+  due_date: z.string().min(1, "Due date is required"),
+  // files: z.array(z.string()).optional(),
+  priority: z.enum(["Low", "Medium", "High"], {
+    message: "Priority is required",
+  }),
+  status: z.enum(["Pending", "In Progress", "Completed"], {
+    message: "Status is required",
+  }),
+  assigned_to: z.string().min(1, "Assigned to is required"),
+});
 
 type formFields = z.infer<typeof taskSchema>;
 
-export function UpdateTask({task}: {task: Task}) {
+export function UpdateTask({ task }: { task: Task }) {
   const [open, setOpen] = React.useState(false);
   const [employees, setEmployees] = React.useState<Array<any>>([]);
-    const {
-        register, 
-        handleSubmit, 
-        formState: { errors },
-        control,
-        setError
-    } = useForm<formFields>(
-        {resolver: zodResolver(taskSchema),
-        defaultValues: {
-            title: task.title,
-            description: task.description,
-            due_date: task.due_date,
-            priority: task.priority,
-            status: task.status,
-            assigned_to: task.assigned_to_id,
-        }}
-    )
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    control,
+    setError,
+  } = useForm<formFields>({
+    resolver: zodResolver(taskSchema),
+    defaultValues: {
+      title: task.title,
+      description: task.description,
+      due_date: task.due_date,
+      priority: task.priority,
+      status: task.status,
+      assigned_to: task.assigned_to_id,
+    },
+  });
 
-    const queryClient = useQueryClient();
-    useEffect(() => {
-      async function fetchEmployees() {
-        const employees = await getEmployees();
-        setEmployees(employees.results);
-      }
-      fetchEmployees();
-    }, [])
-
-    const { mutate, isPending } = useMutation({
-        mutationFn: async (data: formFields) => {
-            return updateTask(task.id, data);
-        },
-        onSuccess: (data) => {
-            showToast({
-                title: "Success",
-                message: data?.message || "Task updated successfully",
-                type: "success"
-            })
-            setOpen(false);
-            queryClient.invalidateQueries({ queryKey: ['user-tasks'] });
-        },
-        onError: (error: any) => {
-            console.error("Error updating task:", error);
-            showToast({
-                title: "Error",
-                message: error?.message || "An error occurred while updating the task",
-                type: "error"
-            });
-            if (error?.message) {
-                setError("root", {
-                    type: "server",
-                    message: error.message,
-                });
-            }
-        },
-    });
-
-    const onSubmit = (data: formFields) => {
-        console.log("Submitting data:", data);
-        mutate(data);
+  const queryClient = useQueryClient();
+  useEffect(() => {
+    async function fetchEmployees() {
+      const employees = await getEmployees();
+      setEmployees(employees.results);
     }
+    fetchEmployees();
+  }, []);
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: async (data: formFields) => {
+      return updateTask(task.id, data);
+    },
+    onSuccess: (data) => {
+      showToast({
+        title: "Success",
+        message: data?.message || "Task updated successfully",
+        type: "success",
+      });
+      setOpen(false);
+      queryClient.invalidateQueries({ queryKey: ["user-tasks"] });
+    },
+    onError: (error: any) => {
+      console.error("Error updating task:", error);
+      showToast({
+        title: "Error",
+        message: error?.message || "An error occurred while updating the task",
+        type: "error",
+      });
+      if (error?.message) {
+        setError("root", {
+          type: "server",
+          message: error.message,
+        });
+      }
+    },
+  });
+
+  const onSubmit = (data: formFields) => {
+    mutate(data);
+  };
 
   return (
-    <Sheet open={open} onOpenChange={setOpen}>
-      <SheetTrigger asChild>
-     <span className="flex gap-x-2"><SquarePenIcon size={18} className="mr-2" />Edit</span>
-      </SheetTrigger>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <span className="flex gap-x-2">
+          <SquarePenIcon size={18} className="mr-2" />
+          Edit
+        </span>
+      </DialogTrigger>
 
-      <SheetContent className="sm:max-w-[600px] overflow-y-scroll">
-              <form onSubmit={handleSubmit(onSubmit)}>
-        <SheetHeader>
-          <SheetTitle>Update Task</SheetTitle>
-          <SheetDescription>
-            Fill in the details below to update the task.
-          </SheetDescription>
-        </SheetHeader>
-        <div className="grid flex-1 auto-rows-min gap-6 px-4">
-          <div className="grid gap-3">
-            <Label htmlFor="title">Title</Label>
-            <Input 
-                id="title" 
+      <DialogContent className="sm:max-w-[600px] overflow-y-scroll">
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <DialogHeader>
+            <DialogTitle>Update Task</DialogTitle>
+            <DialogDescription>
+              Fill in the details below to update the task.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid flex-1 auto-rows-min gap-2">
+            <div className="grid gap-3">
+              <Label htmlFor="title">Title</Label>
+              <Input
+                id="title"
                 aria-invalid={!!errors.title}
                 {...register("title")}
-                 />
-                 <InputErrorText error={errors.title?.message} />
-          </div>
+              />
+              <InputErrorText error={errors.title?.message} />
+            </div>
 
-          <div className="grid gap-3">
-            <Label htmlFor="description">Description</Label>
-            <Textarea
-              id="description"
-              aria-invalid={!!errors.description}
-              {...register("description")}
-              className="min-h-[120px]"
-            />
-            <InputErrorText error={errors.description?.message} />
-          </div>
+            <div className="grid gap-3">
+              <Label htmlFor="description">Description</Label>
+              <Textarea
+                id="description"
+                aria-invalid={!!errors.description}
+                {...register("description")}
+                className="min-h-[120px]"
+              />
+              <InputErrorText error={errors.description?.message} />
+            </div>
 
-          {/* <div className="grid gap-3">
+            {/* <div className="grid gap-3">
             <Label htmlFor="files">Files</Label>
             <Input
               type="file"
@@ -164,18 +175,18 @@ export function UpdateTask({task}: {task: Task}) {
             <InputErrorText error={errors.files?.message} />
           </div> */}
 
-          <div className="grid gap-3">
-            <Label htmlFor="due-date">Due Date</Label>
-            <Input 
-                type="date" 
+            <div className="grid gap-3">
+              <Label htmlFor="due-date">Due Date</Label>
+              <Input
+                type="date"
                 id="due-date"
                 aria-invalid={!!errors.due_date}
                 {...register("due_date")}
-                 />
-            <InputErrorText error={errors.due_date?.message} />
-          </div>
+              />
+              <InputErrorText error={errors.due_date?.message} />
+            </div>
 
-          <div>
+            <div>
               <Controller
                 name="priority"
                 control={control}
@@ -204,8 +215,8 @@ export function UpdateTask({task}: {task: Task}) {
               />
             </div>
 
-          <div>
-            <Controller
+            <div>
+              <Controller
                 name="status"
                 control={control}
                 render={({ field }) => (
@@ -231,10 +242,10 @@ export function UpdateTask({task}: {task: Task}) {
                   </div>
                 )}
               />
-          </div>
+            </div>
 
-          <div>
-           <Controller
+            <div>
+              <Controller
                 name="assigned_to"
                 control={control}
                 render={({ field }) => (
@@ -249,11 +260,11 @@ export function UpdateTask({task}: {task: Task}) {
                       </SelectTrigger>
 
                       <SelectContent>
-                       {employees.map((employee: Employee) => (
+                        {employees.map((employee: Employee) => (
                           <SelectItem key={employee.id} value={employee.id}>
                             {employee.first_name} {employee.last_name}
                           </SelectItem>
-                       ))}
+                        ))}
                       </SelectContent>
                     </Select>
                     {errors.assigned_to && (
@@ -262,19 +273,18 @@ export function UpdateTask({task}: {task: Task}) {
                   </div>
                 )}
               />
+            </div>
           </div>
-        </div>
-        <SheetFooter>
-          <div className="grid grid-cols-2 gap-2">
-            <SheetClose asChild>
-              <Button variant="outline">Close</Button>
-            </SheetClose>
-            <Button type="submit">{ isPending ? <Spinner /> : "Save changes" }</Button>
-          </div>
-        </SheetFooter>
+          <DialogFooter className="mt-4">
+            <DialogClose asChild>
+              <Button variant="outline">Cancel</Button>
+            </DialogClose>
+            <Button type="submit">
+              {isPending ? <Spinner /> : "Save changes"}
+            </Button>
+          </DialogFooter>
         </form>
-      </SheetContent>
-     
-    </Sheet>
+      </DialogContent>
+    </Dialog>
   );
 }

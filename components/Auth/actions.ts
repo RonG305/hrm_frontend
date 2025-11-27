@@ -5,7 +5,8 @@ import { LoginProps } from "./type";
 import { cookies } from "next/headers";
 
 export async function loginUser(formData: LoginProps) {
-    const response = await createData(`/auth/login/`, formData);
+    console.log("Login form data:", formData);
+    const response = await createData(`/auth/login/`, formData, {}, false);
     if(response.error) {
         return {
             error: response.error

@@ -23,7 +23,7 @@ export async function getUserTasks() {
 }
 
 export async function createTask(taskData: any) {
-    const response = await createData(`/tasks/create/`, taskData);
+    const response = await createData(`/tasks/create/`, taskData, {}, true);
     if(response.error) {
         return {
             error: response.error

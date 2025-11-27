@@ -28,24 +28,16 @@ const sidebarItems: SidebarItem[] = [
           className: "w-6 h-6",
         }),
       },
-      {
-        title: "Tasks",
-        url: "/dashboard/tasks",
-        allowedRoles: ["admin", "hr_manager", "supervisor", "employee"],
-      icon: React.createElement(Icon, {
-          icon: "solar:clipboard-list-linear",
+       {
+        title: "Categories",
+        url: "/dashboard/project-categories",
+        allowedRoles: ["admin","supervisor", "employee"],
+        icon: React.createElement(Icon, {
+          icon: "solar:tag-linear",
           className: "w-6 h-6",
         }),
       },
-      {
-        title: "Members",
-        url: "/dashboard/project-members",
-        allowedRoles: ["admin", "hr_manager", "supervisor", "employee"],
-        icon: React.createElement(Icon, {
-          icon: "solar:users-group-rounded-linear",
-          className: "w-6 h-6",
-        }),
-      }
+      
     ],
     allowedRoles: ["admin", "hr_manager", "supervisor", "employee"],
   },
@@ -60,7 +52,7 @@ const sidebarItems: SidebarItem[] = [
     children: [
       {
         title: "Task Assignments",
-        url: "/dashboard/task-assignments",
+        url: "/dashboard/tasks",
         allowedRoles: ["admin"],
         icon: React.createElement(Icon, {
           icon: "solar:clipboard-list-linear",

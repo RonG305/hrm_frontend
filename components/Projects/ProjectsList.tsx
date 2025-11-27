@@ -1,74 +1,120 @@
-'use client'
+"use client";
 
-import { ColumnDef } from '@tanstack/react-table'
-import { Button } from '../ui/button'
-import { CloudDownload } from 'lucide-react'
-import { DataTable } from '../common/DataTable'
-import { project } from './projects'
-import { Badge } from '../ui/badge'
+import { ColumnDef } from "@tanstack/react-table";
+import { Button } from "../ui/button";
+import { CloudDownload } from "lucide-react";
+import { DataTable } from "../common/DataTable";
+import { Badge } from "../ui/badge";
+import { formatDate } from "@/lib/utils";
+import { Project } from "./types";
+import { useQuery } from "@tanstack/react-query";
+import { getAllProjects } from "./actions";
+import TableLoader from "../common/TableLoader";
+import { AddProject } from "./AddProject";
+import ActionDropdown from "../common/ActionsDropDown";
+import { ViewProject } from "./ViewProject";
+import { DeleteProject } from "./DeleteProject";
 
 export const columns: ColumnDef<any>[] = [
-
-    {
-        accessorKey: "title",
-        header: "project title",
+  {
+    accessorKey: "name",
+    header: "project title",
+  },
+  {
+    accessorKey: "category",
+    header: "Category",
+    cell: ({ row }) => {
+      return <span>{row.original.category?.name}</span>;
     },
-    {
-        accessorKey: "startDate",
-        header: "Start Date",
+  },
+  {
+    accessorKey: "start_date",
+    header: "Start Date",
+    cell: ({ row }) => {
+      return <span>{formatDate(row.original.start_date)}</span>;
     },
-        {
-        accessorKey: "endDate",
-        header: "End Date",
+  },
+  {
+    accessorKey: "end_date",
+    header: "End Date",
+    cell: ({ row }) => {
+      return <span>{formatDate(row.original.end_date)}</span>;
     },
-    {
-        accessorKey: "Description",
-        header: "Description",
-        cell: ({ row }) => {
-            return (
-                <span className=' w-[400px] line-clamp-1'>{row.original.description}</span>
-            )
-        }
-    },
+  },
 
-    {
-        accessorKey: "status",
-        header: "Status",
-        cell: ({ row }) => {
-            return (
-                <Badge variant={`${row.original.status === 'Completed' ? "success" : row.original.status === 'In Progress' ? "outline" : "default"}`}>{row.original.status}</Badge>
-            )
-        }
-
-    },
-
-   
-]
-
-const ProjectsList = () => {
-
-    return (
+  {
+    accessorKey: "status",
+    header: "Status",
+    cell: ({ row }) => {
+      return (
         <div>
-            <div className='flex items-center justify-end gap-2'>
-                <Button variant={"outline"}><CloudDownload />Export Readings</Button>
-                {/* <DataExport data={export_data} name='meter_readings' /> */}
-            </div>
-            <div className='w-full overflow-x-auto'>
-                {/* {isLoading && <TableSkeleton />}
-                {isError || error && <TableError />} */}
-
-                    <DataTable
-                        data={project}
-                        columns={columns}
-                        searchableColumns={["customer", "meter", "recorded_at"]}
-                        title="Meter Readings List"
-                        description="View and manage the meter readings"
-                    />
-
-            </div>
-
+          {row.original.status === "Pending" ? (
+            <Badge variant={"warning"}>Pending</Badge>
+          ) : row.original.status === "In Progress" ? (
+            <Badge variant={"info"}>In Progress</Badge>
+          ) : (
+            <Badge variant={"success"}>Completed</Badge>
+          )}
         </div>
-    )
-}
+      );
+    },
+  },
 
-export default ProjectsList
+    {
+    accessorKey: "",
+    header: "Actions",
+    cell: ({ row }) => {
+      const project: Project = row.original;
+      return (
+        <ActionDropdown>
+        <ViewProject data={project} />
+        <DeleteProject project_id={project.id} />
+        </ActionDropdown>
+      )
+    },
+  }
+];
+
+const AddAndExportProjects = () => {
+  return (
+    <div className="flex items-center gap-x-2">
+     <AddProject />
+      <Button variant={"outline"}>
+        <CloudDownload />
+        Export projects
+      </Button>
+    </div>
+  );
+};
+
+
+const ProjectsList = ({initialData}: {initialData: Project[]}) => {
+
+  const {data, isLoading, isError} = useQuery({
+    queryKey: ['projects'],
+    queryFn: async () => getAllProjects(),
+    initialData: initialData,
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    refetchOnWindowFocus: false,
+  });
+
+  return (
+    <div>
+      <div className="w-full overflow-x-auto">
+        {isLoading && <TableLoader />}
+        {isError && <div className="text-red-500">Error loading projects.</div>}
+
+        <DataTable
+          data={data || []}
+          columns={columns}
+          addExportOperationsComponent={<AddAndExportProjects />}
+          searchableColumns={["title", "category", "status"]}
+          title="Projects List"
+          description="View and manage the projects"
+        />
+      </div>
+    </div>
+  );
+};
+
+export default ProjectsList;

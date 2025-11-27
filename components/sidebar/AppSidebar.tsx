@@ -19,6 +19,7 @@ import {
 import sidebarItems from "./sidebarItems";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { decodeToken, getCookie } from "@/lib/utils";
 
 export function AppSidebar() {
   const [loading, setLoading] = useState(false);
@@ -26,18 +27,12 @@ export function AppSidebar() {
   const router = useRouter();
 
   useEffect(() => {
-    if (typeof document !== "undefined") {
-      const userCookie = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("vivoUser="));
-
-      if (userCookie) {
-        const userData = userCookie.split("=")[1];
-        setLoggedInUser(
-          userData ? JSON.parse(decodeURIComponent(userData)) : null
-        );
-      }
-    }
+    const token = localStorage.getItem("token");
+   if(token) {
+    const user = decodeToken(token)
+    console.log("Decoded user from token:", user);
+    setLoggedInUser(user);
+   }
   }, []);
 
   // useEffect(() => {

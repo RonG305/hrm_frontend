@@ -1,12 +1,11 @@
 import React from "react";
 import { Card, CardHeader, CardTitle } from "../ui/card";
 import { dashboardStats } from "./dashboardStats";
-import { Icon } from "@iconify/react";
 import { Progress } from "../ui/progress";
 
 const DashboardStatsCards = () => {
   return (
-    <div className="grid lg:grid-cols-2 grid-cols-1 gap-2">
+    <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-2 mb-4">
       <Card>
         <CardTitle>Average KPI</CardTitle>
         <div>

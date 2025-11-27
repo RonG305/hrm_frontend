@@ -9,7 +9,7 @@ import { Profile } from "./types";
 import { Employee } from "../Employees/types";
 
 const getRandomColor = () => {
-    const colors = ['bg-red-500', 'bg-green-500', 'bg-blue-500', 'bg-yellow-500', 'bg-purple-500', 'bg-pink-500', 'bg-indigo-500'];
+    const colors = ['bg-red-500',  'yellow-500', 'primary', 'secondary' ,'success', 'accent'];
     const randomColor = colors[Math.floor(Math.random() * colors.length)];
     return randomColor;
 }
@@ -17,7 +17,7 @@ const getRandomColor = () => {
 const ProfileHeader = ({profile}: {profile: Employee}) => {
   return (
     <Card className="p-0 h-fit relative">
-      <div className={`h-[150px] rounded-t-sm ${getRandomColor()}`}></div>
+      <div className={`h-[150px] rounded-t-sm bg-linear-to-r from-${getRandomColor()} to-red-500/40 `}></div>
       <div>
         <Image
           src={`/hr_logo.jpg`}

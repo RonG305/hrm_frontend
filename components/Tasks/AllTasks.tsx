@@ -63,10 +63,6 @@ const columns: ColumnDef<Task>[] = [
     cell: ({ row }) => {
       return <ActionDropdown>
         <UpdateTask task={row.original} />
-        <Link className="text-primary flex items-center gap-x-2" href={`/dashboard/tasks/${row.original.id}`}>
-          <EyeIcon />
-            <p>View</p>
-          </Link>
         <DeleteTask task_id={row.original.id} />
       </ActionDropdown>;
     },

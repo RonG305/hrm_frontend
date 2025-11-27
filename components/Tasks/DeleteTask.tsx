@@ -55,7 +55,7 @@ export function DeleteTask({ task_id }: { task_id: string }) {
       <DialogTrigger asChild>
         <span className="flex text-destructive gap-x-2">
           <Trash2 size={18} className="mr-2" />
-          Delete
+          Delete Task
         </span>
       </DialogTrigger>
 

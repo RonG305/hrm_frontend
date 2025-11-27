@@ -36,15 +36,19 @@ export const fetchData = async (url: string, options?: RequestInit) => {
 export const createData = async (
   url: string,
   data: object,
-  options?: RequestInit
+  options?: RequestInit,
+  auth?: boolean
 ) => {
-  const token = (await cookies()).get("token")?.value;
+  let token = "";
+  if (auth) {
+    token = (await cookies()).get("token")?.value || "";
+  }
   try {
     const response = await fetch(`${API_BASE_URL}${url}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        ...(token && { Authorization: `Bearer ${token}` }),
+        ...(token && auth ? { Authorization: `Bearer ${token}` } : {}),
         ...(options?.headers || {}),
       },
       body: JSON.stringify(data),
