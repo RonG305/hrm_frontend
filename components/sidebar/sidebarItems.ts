@@ -289,7 +289,7 @@ const sidebarItems: SidebarItem[] = [
       },
       {
         title: "Asset Requests and Approvals",
-        url: "/dashboard/asset-assignments",
+        url: "/dashboard/asset-requests",
         icon: React.createElement(Icon, {
           icon: "solar:map-arrow-square-linear",
           className: "w-6 h-6",

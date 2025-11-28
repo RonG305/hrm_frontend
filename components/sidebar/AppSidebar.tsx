@@ -28,11 +28,11 @@ export function AppSidebar() {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-   if(token) {
-    const user = decodeToken(token)
-    console.log("Decoded user from token:", user);
-    setLoggedInUser(user);
-   }
+    if (token) {
+      const user = decodeToken(token);
+      console.log("Decoded user from token:", user);
+      setLoggedInUser(user);
+    }
   }, []);
 
   // useEffect(() => {
@@ -119,12 +119,15 @@ export function AppSidebar() {
                             )
                           }
                         >
-                           <a href={item.url || "#"} className="text-primary uppercase font-semibold">
-                          <span className="flex items-center gap-2">
-                            {item.icon}
-                            {item.title}
-                          </span>
-                           </a>
+                          <a
+                            href={item.url || "#"}
+                            className="text-primary uppercase font-semibold"
+                          >
+                            <span className="flex items-center gap-2">
+                              {item.icon}
+                              {item.title}
+                            </span>
+                          </a>
                         </SidebarMenuButton>
                       </SidebarMenuItem>
                       {/* <div className=" flex items-center justify-end">
@@ -136,18 +139,15 @@ export function AppSidebar() {
                     <SidebarMenu className="ml-4">
                       {item.children?.map((child) => (
                         <SidebarMenuItem key={child.title}>
-                          <SidebarMenuButton 
-                           isActive={child.url === pathname}
-                           variant={`${child.url === pathname ? 'primary': 'default'}`}
-                          asChild>
-                            <a
-                              href={child.url}
-                              className=""
-                            >
-                             <span className="flex items-center gap-2">
-                            {child.icon}
-                            {child.title}
-                          </span>
+                          <SidebarMenuButton
+                            isActive={child.url === pathname}
+                            asChild
+                          >
+                            <a href={child.url} className="">
+                              <span className="flex items-center gap-2">
+                                {child.icon}
+                                {child.title}
+                              </span>
                             </a>
                           </SidebarMenuButton>
                         </SidebarMenuItem>
@@ -158,7 +158,6 @@ export function AppSidebar() {
               </Collapsible>
             ))}
           </SidebarGroupContent>
-         
         </SidebarGroup>
       </SidebarContent>
     </Sidebar>

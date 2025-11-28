@@ -1,12 +1,7 @@
 import Login from '@/components/Auth/Login'
-import React from 'react'
 
 const page = () => {
-  return (
-    <div>
- <Login />
-    </div>
-  )
+  return <Login />
 }
 
 export default page

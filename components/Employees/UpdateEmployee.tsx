@@ -33,6 +33,8 @@ import { Spinner } from "../ui/spinner";
 import { showToast } from "../common/ShowToast";
 import { Edit2Icon, SquarePenIcon } from "lucide-react";
 import { getDepartments } from "../Departments/actions";
+import { getAllBranches } from "../Oragnization/Branches/actions";
+import { getAllUnits } from "../Oragnization/Units/actions";
 
 const employeeSchema = z.object({
   first_name: z.string().min(1, "First name is required"),
@@ -44,6 +46,8 @@ const employeeSchema = z.object({
   contract_start_date: z.string().optional().or(z.null()),
   contract_end_date: z.string().optional().or(z.null()),
   is_active: z.boolean().default(true).optional(),
+  branch: z.string().min(1, "Branch is required").optional(),
+  unit: z.string().min(1, "Unit is required").optional(),
   is_staff: z.boolean().default(false).optional(),
   role: z.number().min(1, "Role is required"),
   employment_type: z.enum(["Full-Time", "Part-Time", "Contract"]),
@@ -55,6 +59,8 @@ type formFields = z.infer<typeof employeeSchema>;
 export function UpdateEmployee({employee}: {employee: any}) {
   const [departments, setDepartments] = useState([]);
   const [positions, setPositions] = useState([]);
+  const [branches, setBranches] = useState([]);
+  const [units, setUnits] = useState([]);
    const [open, setOpen] = useState<boolean>(false);
   const [roles, setRoles] = useState([]);
   const [isContract, setIsContract] = useState(false);
@@ -74,6 +80,8 @@ export function UpdateEmployee({employee}: {employee: any}) {
       gender: employee.gender,
       employment_type: employee.employment_type,
       position: employee.position,
+      branch: employee.branch,
+      unit: employee.unit,
       department: employee.department,
       role: employee.role,
       is_active: employee.is_active,
@@ -82,31 +90,28 @@ export function UpdateEmployee({employee}: {employee: any}) {
   });
 
   useEffect(() => {
-    async function fetchDepartments() {
-      const depts = await getDepartments();
+    async function fetchData() {
+      const [depts, rolesData, positionsData, branchesData, unitsData] = await Promise.all([
+        getDepartments(),
+        getRoles(),
+        getOrganizationalRoles(),
+        getAllBranches(),
+        getAllUnits()
+      ]);
       setDepartments(depts?.results || []);
+      setRoles(rolesData || []);
+      setPositions(positionsData?.results || []);
+      setBranches(branchesData?.results || []);
+      setUnits(unitsData?.results || []);
     }
-    async function fetchRoles() {
-      const roles = await getRoles();
-      setRoles(roles || []);
-    }
+    fetchData();
 
-    async function fetchPositions() {
-      const roles = await getOrganizationalRoles();
-      setPositions(roles?.results || []);
-    }
-    fetchDepartments();
-    fetchPositions();
-    fetchRoles();
   }, []);
-
-  console.log("FORM ERRORS:", errors);
 
   const queryClient = useQueryClient();
 
   const { mutate, isPending } = useMutation({
     mutationFn: async (data: formFields) => {
-        console.log("UPDATING EMPLOYEE WITH DATA:", data);
       return updateEmployee(employee.id, data);
     },
     onSuccess: (data) => {
@@ -137,6 +142,7 @@ export function UpdateEmployee({employee}: {employee: any}) {
   });
 
   const onSubmit = (data: formFields) => {
+    console.log("Submitting data:", data);
     mutate(data);
   };
 
@@ -289,6 +295,76 @@ export function UpdateEmployee({employee}: {employee: any}) {
                       <p className="text-red-600 text-sm">
                         {errors.department.message}
                       </p>
+                    )}
+                  </div>
+                )}
+              />
+            </div>
+
+             <div className="grid gap-3">
+              <Label htmlFor="branch">Branch</Label>
+              <Controller
+                name="branch"
+                control={control}
+                render={({ field }) => (
+                  <div>
+                    <Select
+                      onValueChange={(value) => field.onChange(value)}
+                      value={field.value ? String(field.value) : ""}
+                    >
+                      <SelectTrigger
+                        className="w-full"
+                        aria-invalid={!!errors.branch}
+                      >
+                        <SelectValue placeholder="Select Branch" />
+                      </SelectTrigger>
+
+                      <SelectContent>
+                        {branches?.map((branch: any) => (
+                          <SelectItem key={branch.id} value={branch.id.toString()}>
+                            {branch.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+
+                    {errors.branch && (
+                      <InputErrorText error={errors.branch.message} />
+                    )}
+                  </div>
+                )}
+              />
+            </div>
+
+              <div className="grid gap-3">
+              <Label htmlFor="unit">Oranization Unit</Label>
+              <Controller
+                name="unit"
+                control={control}
+                render={({ field }) => (
+                  <div>
+                    <Select
+                      onValueChange={(value) => field.onChange(value)}
+                      value={field.value ? String(field.value) : ""}
+                    >
+                      <SelectTrigger
+                        className="w-full"
+                        aria-invalid={!!errors.unit}
+                      >
+                        <SelectValue placeholder="Select Unit" />
+                      </SelectTrigger>
+
+                      <SelectContent>
+                        {units?.map((unit: any) => (
+                          <SelectItem key={unit.id} value={unit.id.toString()}>
+                            {unit.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+
+                    {errors.unit && (
+                      <InputErrorText error={errors.unit.message} />
                     )}
                   </div>
                 )}

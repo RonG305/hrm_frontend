@@ -53,8 +53,6 @@ export function AddBranch() {
     setError,
   } = useForm<formFields>({ resolver: zodResolver(branchSchema) });
 
-  console.log("Errors:", errors);
-
   const queryClient = useQueryClient();
   useEffect(() => {
     async function fetchEmployees() {
