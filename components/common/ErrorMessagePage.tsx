@@ -24,6 +24,18 @@ export default function ErrorMessagePage({
             </div>
         )}
 
+        {errorMessage?.includes("Network Error") && (
+            <div>
+                <p className="mt-2">Please check your internet connection and try again.</p>
+            </div>
+        )}
+
+        {errorMessage?.includes("Forbidden") && (
+            <div>
+                <p className="mt-2">You do not have permission to access this resource. Please contact your administrator if you believe this is an error.</p>
+            </div>
+        )}
+
    
       </AlertDescription>
     </Alert>

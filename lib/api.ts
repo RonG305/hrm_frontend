@@ -16,6 +16,15 @@ export const fetchData = async (url: string, options?: RequestInit) => {
       ...options,
     });
 
+     if(response.status === 403 || response.status === 400 || response.status === 404) {
+      const errorData = await response.json();
+      console.log("Error Data:", errorData);
+      return {
+        error: `HTTP error!, status: ${response.statusText}`,
+        ...errorData
+      };
+    }
+
     if (!response.ok) {
       return {
         error: `HTTP error!, status: ${response.statusText}`,

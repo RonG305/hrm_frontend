@@ -6,7 +6,7 @@ export async function getLeaveTypes() {
     const  response = await fetchData(`/leave-management/leave-types/list/`);
     if (response.error) {
         return {
-            error: response.message
+            error: response.error
         }
     }
     return response;

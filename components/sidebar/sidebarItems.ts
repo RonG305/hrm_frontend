@@ -133,24 +133,33 @@ const sidebarItems: SidebarItem[] = [
     }),
     children: [
       {
-        title: "Leave Requests",
-        url: "/dashboard/leave-requests",
-        allowedRoles: ["admin", "employee", "hr_manager"],
+        title: "Leave Applications",
+        url: "/dashboard/leave-applications",
+        allowedRoles: ["admin", "hr_manager"],
         icon: React.createElement(Icon, {
           icon: "solar:calendar-linear",
           className: "w-6 h-6",
         }),
       },
-
       {
-        title: "Leave Policies",
-        url: "/dashboard/leave-policies",
+        title: "Leave Types",
+        url: "/dashboard/leave-types",
+        allowedRoles: ["admin", "hr_manager"],
         icon: React.createElement(Icon, {
-          icon: "solar:letter-opened-linear",
+          icon: "solar:tag-linear",
           className: "w-6 h-6",
         }),
-        allowedRoles: ["admin", "employee", "hr_manager"],
       },
+
+      // {
+      //   title: "Leave Policies",
+      //   url: "/dashboard/leave-policies",
+      //   icon: React.createElement(Icon, {
+      //     icon: "solar:letter-opened-linear",
+      //     className: "w-6 h-6",
+      //   }),
+      //   allowedRoles: ["admin", "employee", "hr_manager"],
+      // },
     ],
     allowedRoles: ["admin", "hr_manager", "supervisor", "employee"],
   },
@@ -341,7 +350,7 @@ const sidebarItems: SidebarItem[] = [
       },
       {
         title: "Roles & Permissions",
-        url: "/dashboard/roles-permissions",
+        url: "/dashboard/roles&permissions",
         icon: React.createElement(Icon, {
           icon: "solar:lock-keyhole-linear",
           className: "w-6 h-6",
