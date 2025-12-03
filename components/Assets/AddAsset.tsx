@@ -26,11 +26,11 @@ import {
   DialogTitle,
 } from "../ui/dialog";
 import { DialogTrigger } from "@radix-ui/react-dialog";
-import { getEmployees } from "@/components/Employees/actions";
 import { Employee } from "@/components/Employees/types";
 import { getAssetCategories } from "./Categories/actions";
 import { createAsset } from "./actions";
 import { AssetCategory } from "./Categories/types";
+import { getEmployees } from "../Employees/actions";
 
 const assetSchema = z.object({
     name: z.string().min(1, "Name is required"),
@@ -104,7 +104,7 @@ export function AddAsset() {
     <>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button>Add Asset</Button>
+          <Button variant={"secondary"}>Add Asset</Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[700px]">
           <DialogHeader>
@@ -232,7 +232,7 @@ export function AddAsset() {
               <DialogClose asChild>
                 <Button variant="outline">Cancel</Button>
               </DialogClose>
-              <Button type="submit">
+              <Button variant={"secondary"} type="submit">
                 {isPending ? <Spinner /> : "Save changes"}
               </Button>
             </DialogFooter>

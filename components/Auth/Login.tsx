@@ -109,7 +109,7 @@ const Login = () => {
                   id="email"
                   name="email"
                   placeholder="Enter email"
-                  className="pl-10"
+                  className="pl-10 py-4 rounded-full"
                 />
               </div>
               <InputErrorText error={errors.email?.message} />
@@ -128,14 +128,14 @@ const Login = () => {
                   {...register("password")}
                   id="password"
                   name="password"
-                  placeholder="Enter password"
-                  className="pl-10"
+                  placeholder="Enter password "
+                  className="pl-10 py-4 rounded-full"
                 />
               </div>
               <InputErrorText error={errors.password?.message} />
             </div>
 
-            <Button type="submit" className="w-full mt-4">
+            <Button type="submit" className="w-full py-6 rounded-full mt-4">
             {isPending ? <Spinner /> : "Login"}
             </Button>
 

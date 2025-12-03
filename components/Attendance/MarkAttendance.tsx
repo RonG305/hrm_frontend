@@ -16,13 +16,14 @@ import { useForm } from "react-hook-form";
 import { showToast } from "../common/ShowToast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { markAttendance } from "./actions";
+import { Spinner } from "../ui/spinner";
 
 export function MarkAttendance() {
     const [open, setOpen] = useState(false);
-  const [formData, setFormData] = useState({
-    latitude: "",
-    longitude: "",
-  });
+    const [formData, setFormData] = useState({
+        latitude: '',
+        longitude: ''
+    });
 
   const {
     register,
@@ -61,6 +62,14 @@ useEffect(() => {
             return markAttendance(data);
         },
         onSuccess: (data) => {
+          if(data?.error) {
+            showToast({
+                title: "Error",
+                message: data?.error || "An error occurred while marking attendance !",
+                type: "error"
+            });
+            return;
+          }
             showToast({
                 title: "Success",
                 message: data?.message || "Attendance marked successfully",
@@ -83,26 +92,24 @@ useEffect(() => {
             }
         },
     });
-
   const onSubmit = (data: any) => {
-    console.log("Submitting data:", data);
     mutate(data);
   };
   
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline">Mark attendance</Button>
+        <Button variant="secondary">Mark attendance</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>
           <DialogTitle>Mark Attendance</DialogTitle>
           <DialogDescription>
-            Fill in the information below to mark your attendance.
+            mark your attendance today.
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="grid gap-4">
+          <div className="gap-4 hidden">
             <div className="grid gap-3">
               <Label htmlFor="latitude">Latitude</Label>
               <Input
@@ -123,11 +130,11 @@ useEffect(() => {
               />
             </div>
           </div>
-          <DialogFooter>
+          <DialogFooter className="mt-4">
             <DialogClose asChild>
               <Button variant="outline">Cancel</Button>
             </DialogClose>
-            <Button type="submit">Mark Attendance</Button>
+            <Button type="submit">{isPending ? <Spinner /> : "Mark Attendance"}</Button>
           </DialogFooter>
         </form>
       </DialogContent>

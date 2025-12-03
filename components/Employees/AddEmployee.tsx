@@ -53,7 +53,7 @@ const employeeSchema = z.object({
 
 type formFields = z.infer<typeof employeeSchema>;
 
-export function AddEmployee() {
+export function AddEmployee({title}: {title?: string}) {
   const [departments, setDepartments] = useState([]);
   const [positions, setPositions] = useState([]);
    const [open, setOpen] = useState<boolean>(false);
@@ -95,6 +95,15 @@ export function AddEmployee() {
       return createEmployee(data);
     },
     onSuccess: (data) => {
+      if(data.error) {
+        showToast({
+          title: "Error",
+          message:
+            data?.error || "An error occurred while creating the employee",
+          type: "error",
+        })
+        return;
+      }
       queryClient.invalidateQueries({ queryKey: ["employees"] });
       showToast({
         title: "Employee Created",
@@ -128,12 +137,12 @@ export function AddEmployee() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button>Add Employee</Button>
+        <Button>{title || "Add Employee"}</Button>
       </DialogTrigger>
 
       <DialogContent className="sm:max-w-[1200px] max-h-[90vh] overflow-y-auto no-scrollbar">
         <DialogHeader>
-          <DialogTitle>Add Employee</DialogTitle>
+          <DialogTitle>{title || "Add Employee"}</DialogTitle>
           <DialogDescription>
             Fill the form below to add a new employee to the system.
           </DialogDescription>
@@ -479,7 +488,7 @@ export function AddEmployee() {
             </DialogClose>
 
             <Button type="submit">
-              {isPending ? <Spinner /> : "Add Employee"}
+              {isPending ? <Spinner /> : "Save changes"}
             </Button>
           </DialogFooter>
         </form>

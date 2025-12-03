@@ -1,4 +1,5 @@
 'use server'
+
 import { createData, deleteData, fetchData, updateData } from '@/lib/api'
 
 export async function getAssets() {
@@ -21,6 +22,16 @@ export async function createAsset(assetData: any) {
 }
 
 export async function updateAsset(assetId: string, assetData: any) {
+    const response = await updateData(`/assets-inventory/assets/${assetId}/update/`, assetData);
+    if(response.error) {
+        return {
+            error: response.error
+        }
+    }
+    return response;
+}
+
+export async function assignAsset(assetId: string, assetData: any) {
     const response = await updateData(`/assets-inventory/assets/${assetId}/update/`, assetData);
     if(response.error) {
         return {

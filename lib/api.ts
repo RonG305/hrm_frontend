@@ -55,10 +55,18 @@ export const createData = async (
       ...options,
     });
 
+    if(response.status === 400) {
+      const errorData = await response.json();
+      return {
+        error: `HTTP error!, status: ${response.statusText}`,
+        ...errorData
+      };
+    }
+
     if (!response.ok) {
       return {
         error: `HTTP error!, status: ${response.statusText}`,
-        message: "Failed to fetch data",
+        message: `${response.status} Failed to fetch data`,
       };
     }
 

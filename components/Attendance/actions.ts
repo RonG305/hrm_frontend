@@ -18,7 +18,8 @@ export async function getAllAttendanceRecords() {
 }
 
 export async function markAttendance(attendanceData: AttendanceRecord) {
-    const response = await createData(`/geo_location/attendance/mark/`, attendanceData);
+    const response = await createData(`/geo_location/attendance/mark/`, attendanceData, {}, true);
+    console.log("markAttendance response:", response);
     
     if(response.error) {
         return {

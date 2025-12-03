@@ -4,11 +4,9 @@ import {
   SidebarContent,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarTrigger,
 } from "@/components/ui/sidebar";
 import Image from "next/image";
 import {
@@ -18,65 +16,30 @@ import {
 } from "../ui/collapsible";
 import sidebarItems from "./sidebarItems";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { decodeToken, getCookie } from "@/lib/utils";
+import { useState } from "react";
+import { decodeToken } from "@/lib/utils";
 
 export function AppSidebar() {
   const [loading, setLoading] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState<any>(null);
   const router = useRouter();
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      const user = decodeToken(token);
-      console.log("Decoded user from token:", user);
-      setLoggedInUser(user);
-    }
-  }, []);
+    const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
+    const decodedUser = token ? decodeToken(token) : null
+    console.log('Decoded User in Sidebar:', decodedUser);
 
-  // useEffect(() => {
-  //    if (!loggedInUser) {
-  //       router.push("/login");
-  //    }
-  // }, [loggedInUser, router]);
+    const userRoles = decodedUser?.roles || []
 
-  const handleLogout = () => {
-    if (typeof document !== "undefined") {
-      document.cookie = "vivoUser=; Max-Age=0; path=/";
-    }
-    setLoading(true);
-    setLoggedInUser(null);
-    setTimeout(() => {
-      router.push("/login");
-    }, 3000);
-  };
+    const hasAccess = (allowedRoles?: string[]) => {
+        if (!allowedRoles || allowedRoles.length === 0) {
+            return true;
+        }
 
-  // const [loading, setLoading] = useState(false)
-  // const [loggedInUser, setLoggedInUser] = useState(() => {
-  //    const userCookie = document.cookie.split('; ').find(row => row.startsWith('vivoUser='));
-  //    if (userCookie) {
-  //       const userData = userCookie.split('=')[1];
-  //       return userData ? JSON.parse(decodeURIComponent(userData)) : null;
-  //    }
-  //    return null;
-  // });
-  // const router = useRouter();
-  // useEffect(() => {
-  //    if (!loggedInUser) {
-  //       router.push('/login');
-  //    }
-  // }, [loggedInUser, router]);
-
-  // const handleLogout = () => {
-  //    document.cookie = 'vivoUser=; Max-Age=0; path=/';
-  //    setLoading(true);
-  //    setLoggedInUser(null);
-  //    const router = useRouter();
-  //    setTimeout(() => {
-  //       router.push('/login');
-  //    }, 3000);
-  // };
+        if (userRoles.includes('admin')) {
+            return true;
+        }
+        return allowedRoles.some(role => userRoles.includes(role));
+    };
 
   const pathname = usePathname();
 
@@ -104,7 +67,7 @@ export function AppSidebar() {
 
           <div className="border-b border-gray-300 my-3"></div>
           <SidebarGroupContent className="font-medium">
-            {sidebarItems.map((item, index) => (
+            {sidebarItems.filter(item => hasAccess(item.allowedRoles)).map((item, index) => (
               <Collapsible key={index} defaultOpen={true}>
                 <SidebarGroup>
                   <div className="text-sm">
@@ -112,12 +75,12 @@ export function AppSidebar() {
                       <SidebarMenuItem className="flex gap-4">
                         <SidebarMenuButton
                           asChild
-                          isActive={
-                            item?.url === pathname ||
-                            item.children?.some(
-                              (child) => child.url === pathname
-                            )
-                          }
+                          // isActive={
+                          //   item?.url === pathname ||
+                          //   item.children?.some(
+                          //     (child) => child.url === pathname
+                          //   )
+                          // }
                         >
                           <a
                             href={item.url || "#"}
@@ -130,14 +93,11 @@ export function AppSidebar() {
                           </a>
                         </SidebarMenuButton>
                       </SidebarMenuItem>
-                      {/* <div className=" flex items-center justify-end">
-                                   <ChevronDownIcon className="h-4 w-4  transition-transform duration-200 ease-in-out data-[state=open]:rotate-180" />
-                               </div> */}
                     </CollapsibleTrigger>
                   </div>
                   <CollapsibleContent>
                     <SidebarMenu className="ml-4">
-                      {item.children?.map((child) => (
+                      {item.children?.filter(child => hasAccess(child.allowedRoles)).map((child) => (
                         <SidebarMenuItem key={child.title}>
                           <SidebarMenuButton
                             isActive={child.url === pathname}

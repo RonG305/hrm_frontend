@@ -3,17 +3,14 @@ import { DataTable } from "../../common/DataTable";
 import { formatDate } from "@/lib/utils";
 import { ColumnDef } from "@tanstack/react-table";
 import ActionDropdown from "../../common/ActionsDropDown";
-import { useQuery } from "@tanstack/react-query";
-import TableLoader from "../../common/TableLoader"
-import { Department } from "@/components/Departments/types";
-import { Branch } from "./types";
-import { getAllBranches } from "./actions";
+import { Branch, BranchResponse } from "./types";
 import { AddBranch } from "./AddBranch";
 import { UpdateBranch } from "./UpdateBranch";
 import { DeleteBranch } from "./DeleteBranch";
 
 const columns: ColumnDef<Branch>[] = [
-  {
+ 
+ {
     accessorKey: "name",
     header: "Branch Name",
     cell: ({ row }) => {
@@ -74,33 +71,26 @@ const columns: ColumnDef<Branch>[] = [
   },
 ];
 
-const BranchesList = ({ initialData }: { initialData: Branch[] }) => {
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["branches"],
-    queryFn: async () => getAllBranches(),
-    initialData: initialData,
-  });
+const BranchesList = ({ initialData }: { initialData: BranchResponse }) => {
 
   const AddAndExportBranches = () => {
     return (
       <div className="flex items-center gap-x-2">
-       <AddBranch />
+        <AddBranch />
       </div>
     );
   };
 
   return (
     <div>
-      {isLoading && <TableLoader />}
-      {isError && <div className="text-red-500">Error loading tasks.</div>}
-      {data && (
+      {initialData && (
         <DataTable
           columns={columns}
           searchableColumns={["name", "code"]}
           title="All Branches"
           addExportOperationsComponent={<AddAndExportBranches />}
           description="List of all branches in the organization"
-          data={data?.results || []}
+          data={initialData?.results || []}
         />
       )}
     </div>

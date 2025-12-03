@@ -3,14 +3,12 @@ import { DataTable } from "../common/DataTable";
 import { formatDate } from "@/lib/utils";
 import { ColumnDef } from "@tanstack/react-table";
 import ActionDropdown from "../common/ActionsDropDown";
-import { useQuery } from "@tanstack/react-query";
-import TableLoader from "../common/TableLoader";
-import { Asset } from "./types";
+import { Asset, AssetResponse } from "./types";
 import { Badge } from "../ui/badge";
-import { getAssets } from "./actions";
 import { AddAsset } from "./AddAsset";
 import { UpdateAsset } from "./UpdateAsset";
 import { DeleteAsset } from "./DeleteAsset";
+import { AssignAsset } from "./AssignAsset";
 
 const columns: ColumnDef<Asset>[] = [
   {
@@ -73,7 +71,7 @@ const columns: ColumnDef<Asset>[] = [
       return (
         <Badge variant={
             row.original.status === 'Available' ? 'success' :
-            row.original.status === 'Assigned' ? 'accent' :
+            row.original.status === 'Assigned' ? 'info' :
             row.original.status === 'Under Maintenance' ? 'warning' :
             row.original.status === 'Retired' ? 'destructive' :
             'default'
@@ -89,6 +87,7 @@ const columns: ColumnDef<Asset>[] = [
       return (
         <ActionDropdown>
           <UpdateAsset asset={row.original} />
+          <AssignAsset asset={row.original} />
           <DeleteAsset asset_id={row.original.id.toString()} />
         </ActionDropdown>
       );
@@ -96,12 +95,7 @@ const columns: ColumnDef<Asset>[] = [
   },
 ];
 
-const AssetsList = ({ initialData }: { initialData: Asset[] }) => {
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["assets"],
-    queryFn: async () => getAssets(),
-    initialData: initialData,
-  });
+const AssetsList = ({ initialData }: { initialData: AssetResponse }) => {
 
   const AddAndExportAssets = () => {
     return (
@@ -113,16 +107,14 @@ const AssetsList = ({ initialData }: { initialData: Asset[] }) => {
 
   return (
     <div>
-      {isLoading && <TableLoader />}
-      {isError && <div className="text-red-500">Error loading assets</div>}
-      {data && (
+      {initialData && (
         <DataTable
           columns={columns}
           searchableColumns={["name", "code"]}
           title="All Assets"
           addExportOperationsComponent={<AddAndExportAssets />}
           description="List of all assets in the organization"
-          data={data?.results || []}
+          data={initialData?.results || []}
         />
       )}
     </div>

@@ -10,7 +10,7 @@ const sidebarItems: SidebarItem[] = [
     }),
     url: "/dashboard",
     children: [],
-    allowedRoles: ["admin", "hr_manager", "supervisor", "employee"],
+    allowedRoles: ["admin", "hr_manager", "supervisor"],
   },
   {
     title: "Projects Management",
@@ -18,11 +18,12 @@ const sidebarItems: SidebarItem[] = [
       icon: "",
       className: "w-6 h-6",
     }),
+    allowedRoles: ["admin", "hr_manager", "supervisor"],
     children: [
       {
         title: "Projects",
         url: "/dashboard/projects",
-        allowedRoles: ["admin", "hr_manager", "supervisor", "employee"],
+        allowedRoles: ["admin", "hr_manager", "supervisor"],
         icon: React.createElement(Icon, {
           icon: "solar:settings-linear",
           className: "w-6 h-6",
@@ -31,7 +32,7 @@ const sidebarItems: SidebarItem[] = [
        {
         title: "Categories",
         url: "/dashboard/project-categories",
-        allowedRoles: ["admin","supervisor", "employee"],
+        allowedRoles: ["admin","supervisor"],
         icon: React.createElement(Icon, {
           icon: "solar:tag-linear",
           className: "w-6 h-6",
@@ -39,7 +40,7 @@ const sidebarItems: SidebarItem[] = [
       },
       
     ],
-    allowedRoles: ["admin", "hr_manager", "supervisor", "employee"],
+
   },
 
 
@@ -53,7 +54,7 @@ const sidebarItems: SidebarItem[] = [
       {
         title: "Task Assignments",
         url: "/dashboard/tasks",
-        allowedRoles: ["admin"],
+        allowedRoles: ["admin", "employee"],
         icon: React.createElement(Icon, {
           icon: "solar:clipboard-list-linear",
           className: "w-6 h-6",
@@ -67,7 +68,7 @@ const sidebarItems: SidebarItem[] = [
       icon: "solar:calendar-mark-outline",
           className: "w-6 h-6",
         }),
-        allowedRoles: ["admin",],
+        allowedRoles: ["admin", "employee"],
       },
       {
         title: "Performance Analytics",
@@ -89,7 +90,7 @@ const sidebarItems: SidebarItem[] = [
         allowedRoles: ["admin",],
       },
     ],
-    allowedRoles: ["admin", "hr_manager"],
+    allowedRoles: ["admin", "employee", "hr_manager"],
   },
 
    {
@@ -100,23 +101,13 @@ const sidebarItems: SidebarItem[] = [
     }),
     children: [
       {
-        title: "Time Tracking",
-        url: "/dashboard/time-tracking",
-        allowedRoles: ["admin"],
-        icon: React.createElement(Icon, {
-          icon: "solar:alarm-linear",
-          className: "w-6 h-6",
-        }),
-      },
-
-      {
         title: "Geofence Attendance",
         url: "/dashboard/geofence-attendance",
         icon: React.createElement(Icon, {
           icon: "solar:earth-linear",
           className: "w-6 h-6",
         }),
-        allowedRoles: ["admin",],
+        allowedRoles: ["admin", "employee", "hr_manager"],
       },
 
         {
@@ -126,20 +117,42 @@ const sidebarItems: SidebarItem[] = [
           icon: "solar:book-outline",
           className: "w-6 h-6",
         }),
-        allowedRoles: ["admin",],
+        allowedRoles: ["admin", "employee", "hr_manager"],
+      },
+
+     
+    ],
+    allowedRoles: ["admin", "employee", "hr_manager"],
+  },
+
+  {
+    title: "Leave Management",
+    icon: React.createElement(Icon, {
+      icon: "",
+      className: "w-6 h-6",
+    }),
+    children: [
+      {
+        title: "Leave Requests",
+        url: "/dashboard/leave-requests",
+        allowedRoles: ["admin", "employee", "hr_manager"],
+        icon: React.createElement(Icon, {
+          icon: "solar:calendar-linear",
+          className: "w-6 h-6",
+        }),
       },
 
       {
-        title: "Leave Management",
-        url: "/dashboard/leave-management",
+        title: "Leave Policies",
+        url: "/dashboard/leave-policies",
         icon: React.createElement(Icon, {
-          icon: "solar:calendar-minimalistic-broken",
+          icon: "solar:letter-opened-linear",
           className: "w-6 h-6",
         }),
-        allowedRoles: ["admin",],
+        allowedRoles: ["admin", "employee", "hr_manager"],
       },
     ],
-    allowedRoles: ["admin", "hr_manager"],
+    allowedRoles: ["admin", "hr_manager", "supervisor", "employee"],
   },
 
     {
@@ -200,6 +213,7 @@ const sidebarItems: SidebarItem[] = [
       icon: "",
       className: "w-6 h-6",
     }),
+       
     children: [
       {
         title: "Job Requisitions",
@@ -268,7 +282,7 @@ const sidebarItems: SidebarItem[] = [
         }),
       },
     ],
-    allowedRoles: ["admin", "hr_manager", "supervisor", "employee"],
+    allowedRoles: ["admin", "hr_manager", "supervisor"],
   },
 
    {
@@ -376,6 +390,7 @@ export type SidebarItem = {
   url?: string;
   position?: "top" | "bottom";
   allowedRoles: string[];
+  roles?: string[];
   children?: SidebarItem[];
 };
 

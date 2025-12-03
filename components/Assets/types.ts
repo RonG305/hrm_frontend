@@ -11,3 +11,10 @@ export interface Asset {
     date_created: string;
     date_updated: string;
 }        
+
+export interface AssetResponse {
+    results: Asset[];
+    total: number;
+    previous?: string;
+    next?: string;
+}

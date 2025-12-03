@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 import { DataTable } from "../common/DataTable";
 import { formatDate } from "@/lib/utils";
 import { Task } from "./types";
@@ -12,8 +11,6 @@ import TableLoader from "../common/TableLoader";
 import {AddTask} from "./AddTask";
 import { DeleteTask } from "./DeleteTask";
 import { UpdateTask } from "./UpdateTask";
-import Link from "next/link";
-import { EyeIcon } from "lucide-react";
 import ViewTask from "./ViewTask";
 
 const columns: ColumnDef<Task>[] = [

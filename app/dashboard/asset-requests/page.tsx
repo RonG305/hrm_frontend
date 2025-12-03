@@ -1,11 +1,14 @@
-import React from 'react'
 
-const page = () => {
-  return (
-    <div>
-      Asset Requests
-    </div>
-  )
-}
+import { getAssetRequests } from "@/components/Assets/Requests/actions";
+import AssetRequestList from "@/components/Assets/Requests/RequestList";
+import ErrorMessagePage from "@/components/common/ErrorMessagePage";
 
-export default page
+const page = async () => {
+  const assetRequests = await getAssetRequests();
+  if (assetRequests.error) {
+    return <ErrorMessagePage errorMessage={assetRequests.error} />;
+  }
+  return <AssetRequestList initialData={assetRequests} />;
+};
+
+export default page;

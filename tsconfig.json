@@ -29,6 +29,6 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts"
-  ],
+, "components/Assets/Requests/actions.ts", "components/Employees/actions.ts"  ],
   "exclude": ["node_modules"]
 }

@@ -13,4 +13,6 @@ export interface Branch {
 export interface BranchResponse {
     results: Branch[];
     count: number;
+    previous?: string;
+    next?: string;
 }

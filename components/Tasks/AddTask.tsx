@@ -40,6 +40,7 @@ import {
   DialogTitle,
 } from "../ui/dialog";
 import { DialogTrigger } from "@radix-ui/react-dialog";
+import AllowedAccess from "../Auth/AllowedRoles";
 
 const taskSchema = z.object({
   title: z.string().min(1, "Title is required"),
@@ -112,9 +113,12 @@ export function AddTask() {
   return (
     <>
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>
+        <AllowedAccess allowedRoles={["admin", "hr_manager"]}>
+          <DialogTrigger asChild>
           <Button>Add Task</Button>
         </DialogTrigger>
+          </AllowedAccess>
+        
         <DialogContent className="sm:max-w-[700px]">
           <DialogHeader>
             <DialogTitle>Add Task</DialogTitle>

@@ -1,11 +1,15 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "leaflet/dist/leaflet.css";
+
 
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-warning: var(--warning);
+  --color-warning-light: var(--warning-light);
+  --color-info-light: var(--info-light);
   --color-info: var(--info);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
@@ -57,9 +61,11 @@
   --warning: #ecd611;
   --info: #639cf7;
   --popover-foreground: oklch(0.145 0 0);
-  --primary:  #0d855d;
+  --primary:  #10B981;
+  --warning-light: #fff9db;
+  --info-light: #e1edff;
   --primary-foreground: oklch(0.985 0 0);
-  --secondary: #1b0801;
+  --secondary: #1F2937;
   --secondary-foreground: oklch(0.205 0 0);
   --muted: oklch(0.97 0 0);
   --muted-foreground: oklch(0.556 0 0);

@@ -40,6 +40,7 @@ export interface Employee {
     is_active: boolean;
     is_staff: boolean;
     role: string;
+    status: string;
     department: string;
     position: string;
     groups: string[];

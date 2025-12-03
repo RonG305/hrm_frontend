@@ -5,7 +5,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import ActionDropdown from "../common/ActionsDropDown";
 import { useQuery } from "@tanstack/react-query";
 import TableLoader from "../common/TableLoader";
-import { Department } from "./types";
+import { Department, DepartmentResponse } from "./types";
 import { getDepartments } from "./actions";
 import { AddDepartment } from "./AddDepartment";
 import { UpdateDepartment } from "./UpdateDepartment";
@@ -56,12 +56,7 @@ const columns: ColumnDef<Department>[] = [
   },
 ];
 
-const DepartmentsList = ({ initialData }: { initialData: Department[] }) => {
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["departments"],
-    queryFn: async () => getDepartments(),
-    initialData: initialData,
-  });
+const DepartmentsList = ({ initialData }: { initialData: DepartmentResponse }) => {
 
   const AddAndExportDepartments = () => {
     return (
@@ -73,16 +68,14 @@ const DepartmentsList = ({ initialData }: { initialData: Department[] }) => {
 
   return (
     <div>
-      {isLoading && <TableLoader />}
-      {isError && <div className="text-red-500">Error loading tasks.</div>}
-      {data && (
+      {initialData && (
         <DataTable
           columns={columns}
           searchableColumns={["name", "code"]}
           title="All Departments"
           addExportOperationsComponent={<AddAndExportDepartments />}
           description="List of all departments in the organization"
-          data={data?.results || []}
+          data={initialData?.results || []}
         />
       )}
     </div>

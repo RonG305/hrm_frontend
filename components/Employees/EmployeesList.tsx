@@ -98,10 +98,8 @@ const EmployeesList = ({initialData, currentType}: {initialData: any, currentTyp
 
   const {data, isLoading, isError} = useQuery({
     queryKey: ['employees', currentType],
-    queryFn: async () => getEmployees({search: currentType}),
-    initialData: initialData,
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    refetchOnWindowFocus: false,
+    queryFn: async () => {},
+    initialData: initialData
   })
   return (
     <div className="w-full">

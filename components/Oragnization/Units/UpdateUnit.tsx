@@ -26,11 +26,11 @@ import {
   DialogTitle,
 } from "../../ui/dialog";
 import { DialogTrigger } from "@radix-ui/react-dialog";
-import { getEmployees } from "@/components/Employees/actions";
 import { Employee } from "@/components/Employees/types";
 import { SquarePenIcon } from "lucide-react";
 import { Unit } from "./types";
 import { updateUnit } from "./actions";
+import { getEmployees } from "@/components/Employees/actions";
 
 const UnitSchema = z.object({
   name: z.string().min(1, "Name is required"),
