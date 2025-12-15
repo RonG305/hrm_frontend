@@ -13,18 +13,14 @@ import { getEmployees } from "../Employees/actions";
 import { getAllProjectCategories } from "../ProjectCategories/actions";
 import { createProject } from "./actions";
 import {
-  Sheet,
   SheetClose,
-  SheetContent,
-  SheetDescription,
   SheetFooter,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
 } from "../ui/sheet";
 import { Textarea } from "../ui/textarea";
 import SearchableCategoriesInput from "../ProjectCategories/SearchableCategoriesInput";
 import SearchableEmployeesInput from "../Employees/SearchableEmployeeInput";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
+import AllowedAccess from "../Auth/AllowedRoles";
 
 const projectSchema = z.object({
   name: z.string().min(1, "Project name is required"),
@@ -70,6 +66,14 @@ export function AddProject() {
       return createProject(data);
     },
     onSuccess: (data) => {
+      console.log("data ", data)
+      if(data?.error) {
+        showToast({
+        title: "Failed to create project",
+        type: "error",
+        message: data?.error || data?.message || "The project has been created successfully.",
+      });
+      }
       queryClient.invalidateQueries({ queryKey: ["projects"] });
       showToast({
         title: "Project Created",
@@ -103,19 +107,20 @@ export function AddProject() {
 
   const watchedValues = control._formValues;
   return (
-    <Sheet open={open} onOpenChange={setOpen}>
-      <SheetTrigger asChild>
-        <Button>Add Project</Button>
-      </SheetTrigger>
-
-      <SheetContent className="sm:max-w-[600px] overflow-y-scroll">
-        <SheetHeader>
-          <SheetTitle>Add Project</SheetTitle>
-          <SheetDescription>
-            Fill in the details below to add a new .
-          </SheetDescription>
-        </SheetHeader>
-
+        <Dialog open={open} onOpenChange={setOpen}>
+        <AllowedAccess allowedRoles={["admin", "hr_manager"]}>
+          <DialogTrigger asChild>
+          <Button>Add Project</Button>
+        </DialogTrigger>
+          </AllowedAccess>
+        
+        <DialogContent className="sm:max-w-[700px]">
+          <DialogHeader>
+            <DialogTitle>Add Project</DialogTitle>
+            <DialogDescription>
+              Fill in the details below to add a new project.
+            </DialogDescription>
+          </DialogHeader>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div className="grid flex-1 auto-rows-min gap-6 px-4">
             <div className="grid gap-3">
@@ -221,7 +226,7 @@ export function AddProject() {
             </div>
           </SheetFooter>
         </form>
-      </SheetContent>
-    </Sheet>
+      </DialogContent>
+    </Dialog>
   );
 }

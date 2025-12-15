@@ -1,0 +1,1 @@
+export const HR_LOGO = "/hr_logo.jpg";

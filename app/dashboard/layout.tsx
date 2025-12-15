@@ -2,6 +2,7 @@ import Navbar from "@/components/navbar/Navbar";
 import { AppSidebar } from "@/components/sidebar/AppSidebar";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import { SidebarProvider } from "@/components/ui/sidebar";
+import { HR_LOGO } from "@/lib/constants";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -15,18 +16,18 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <AppSidebar />
         <main className="w-full flex flex-col">
           <Navbar />
-          {/* <div>
+          <div>
                <div
                   className="fixed inset-0 -z-10 opacity-10"
                   style={{
-                     backgroundImage: `url(${VIVO_LOGO})`,
+                     backgroundImage: `url(${HR_LOGO})`,
                      backgroundRepeat: 'no-repeat',
                      backgroundSize: '400px',
                      backgroundPosition: 'center',
                      backgroundAttachment: 'fixed'
                   }}
                />
-            </div> */}
+          </div>
           <div className="p-4 flex-1 overflow-y-auto container mx-auto">
             {children}
           </div>

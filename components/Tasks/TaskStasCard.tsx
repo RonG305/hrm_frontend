@@ -17,10 +17,9 @@ interface TaskStatsData {
 }
 
 const colorMap: Record<string, string> = {
-  total_tasks: "text-primary",
-  completed_tasks: "text-success bg-success-light",
-  pending_tasks: "text-warning bg-warning-light",
-  in_progress_tasks: "text-info bg-info-light",
+  total_tasks: "text-white bg-primary",
+  completed_tasks: "text-success",
+  in_progress_tasks: "text-info",
 };
 
 interface TaskStatsProps {
@@ -32,7 +31,7 @@ const TaskStatsCard = ({ data, iconMap }: TaskStatsProps) => {
   const statsArray = Object.entries(data.tasks_statistics);
 
   return (
-    <div className="p-4 grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-4">
+    <div className="p-4 grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-1">
       {statsArray.map(([key, stat], index) => (
         <Card 
          key={index}
@@ -40,9 +39,9 @@ const TaskStatsCard = ({ data, iconMap }: TaskStatsProps) => {
           <div className="flex items-center gap-x-2">
             <Icon
               icon={iconMap?.[key] || "solar:clipboard-check-linear"}
-              className={`w-7 h-7 ${colorMap[key]} bg-success-light  rounded-full`}
+              className={`w-7 h-7 ${colorMap[key]}   rounded-full`}
             />
-            <p className="text-muted-foreground">{stat.description}</p>
+            <p>{stat.description}</p>
           </div>
            <div>
             <h3 className="text-4xl font-medium">{stat.count}</h3>
@@ -52,7 +51,7 @@ const TaskStatsCard = ({ data, iconMap }: TaskStatsProps) => {
             <div className="border border-success rounded-full ">
               <Icon icon="solar:arrow-up-linear" />
             </div>
-            <span className={`${colorMap[key]} font-medium mb-1`}>+8% since last week</span>
+            <span className={`${colorMap[key]} font-medium mb-1 text-xs`}>+8% since last week</span>
           </div>
           
         </Card>

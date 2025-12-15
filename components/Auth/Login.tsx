@@ -16,6 +16,7 @@ import { showToast } from "../common/ShowToast";
 import { useRouter } from "next/navigation";
 import InputErrorText from "../common/InputErrorText";
 import { Spinner } from "../ui/spinner";
+import { Card } from "../ui/card";
 
 const loginSchema = z.object({
   email: z.string().min(1, "Email is required").email("Invalid email address"),
@@ -77,19 +78,19 @@ const Login = () => {
     mutate(data);
   };
   return (
-    <div className="min-h-screen grid md:grid-cols-2 grid-cols-1">
+   <div className="min-h-screen grid md:grid-cols-1 grid-cols-1 bg-[url(/cubes.jpg)] bg-cover bg-bottom bg-no-repeat">
       <motion.div
         initial={{ opacity: 0, x: -40 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5 }}
         className="flex items-center justify-center p-10"
       >
-        <div className="w-full max-w-md space-y-8">
-          <div>
-            <h2 className="text-3xl mb-2 font-bold tracking-tight">
+        <Card className="w-full max-w-md space-y-8">
+          <div className="text-center ">
+            <h2 className="text-3xl mb-2  text-primary font-semibold tracking-tight">
               Login to account
             </h2>
-            <p className="text-muted-foreground mb-2">
+            <p className=" mb-2">
               Enter your email and password to access your HRM Portal account.
             </p>
           </div>
@@ -146,25 +147,9 @@ const Login = () => {
               </Link>
             </p>
           </form>
-        </div>
+        </Card>
       </motion.div>
 
-      <motion.div
-        initial={{ opacity: 0, x: 40 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.5 }}
-        className="hidden md:flex items-center justify-center bg-muted p-10"
-      >
-        <div className="rounded-2xl overflow-hidden ">
-          <Image
-            src="/hrms.png"
-            width={900}
-            height={900}
-            alt="HRMS Illustration"
-            className="object-cover"
-          />
-        </div>
-      </motion.div>
     </div>
   );
 };

@@ -14,7 +14,7 @@ const ActionDropdown = ({ children }: { children: React.ReactNode }) => {
           <MoreHorizontal />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className='border bg-card z-50 w-[150px] shadow-sm rounded-md flex gap-3 cursor-pointer flex-col p-2'>
+      <DropdownMenuContent align="end" className='border z-[1000px] bg-card w-[150px] shadow-sm rounded-md flex gap-3 cursor-pointer flex-col p-2'>
         <DropdownMenuLabel className='text-muted-foreground'>Actions</DropdownMenuLabel>
         <Separator />
         {children}

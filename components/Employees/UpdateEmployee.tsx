@@ -57,6 +57,7 @@ const employeeSchema = z.object({
 type formFields = z.infer<typeof employeeSchema>;
 
 export function UpdateEmployee({employee}: {employee: any}) {
+  console.log("Employee: ", employee.id)
   const [departments, setDepartments] = useState([]);
   const [positions, setPositions] = useState([]);
   const [branches, setBranches] = useState([]);
